@@ -5,8 +5,8 @@ import time
 try:
       GPIO.setmode(GPIO.BOARD)
 
-      PIN_TRIGGER = 7
-      PIN_ECHO = 11
+      PIN_TRIGGER =13
+      PIN_ECHO = 15
 
       GPIO.setup(PIN_TRIGGER, GPIO.OUT)
       GPIO.setup(PIN_ECHO, GPIO.IN)
@@ -30,8 +30,8 @@ try:
       while GPIO.input(PIN_ECHO)==1:
             pulse_end_time = time.time()
 
-      print(pulse_start_time)
-      print(pulse_end_time)
+      #print(pulse_start_time)
+      #print(pulse_end_time)
 
       pulse_duration = pulse_end_time - pulse_start_time
       distance = round(pulse_duration * 17150, 2)
