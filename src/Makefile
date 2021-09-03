@@ -1,4 +1,4 @@
-WFLAGS = -W -Wall -Wshadow -pedantic -lwiringPi -lpthread
+WFLAGS = -W -Wall -Wshadow -pedantic -lwiringPi -lpthread -lm
 all: main.out 
 main.out : main.o sensor.o
 	gcc $(WFLAGS) main.o sensor.o -o main.out

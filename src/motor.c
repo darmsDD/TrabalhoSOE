@@ -25,7 +25,7 @@ int main()
     pinMode(IN3, OUTPUT);
     pinMode(IN4, OUTPUT);
 
-    sleep(10);
+    //sleep(10);
     digitalWrite(IN1, HIGH);
     digitalWrite(IN2, LOW);
     digitalWrite(IN3, HIGH);

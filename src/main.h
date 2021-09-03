@@ -1,12 +1,7 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include <wiringPi.h>
-#include <unistd.h>
-#include<stdio.h>
 #include<stdlib.h>
-#include<signal.h>
-#include <pthread.h>
 #include "sensor.h"
 
 #define IN1 7

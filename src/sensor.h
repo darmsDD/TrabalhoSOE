@@ -2,12 +2,11 @@
 #define SENSOR_H
 
 #include <wiringPi.h>
-#include <unistd.h>
 #include<stdio.h>
-#include<stdlib.h>
-#include<time.h>
-#include<signal.h>
+#include<math.h>
 #include<pthread.h>
+#include<signal.h>
+#include<unistd.h>
 
 #define trigger 2
 #define echo 3

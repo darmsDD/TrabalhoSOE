@@ -1,17 +1,14 @@
-#include "sensor.h"
+#include <wiringPi.h>
+#include<stdio.h>
+#include<math.h>
 
 
-char mandar_sinal=1;
 
-void pode_mandar_sinal(int sig){
-    mandar_sinal = !mandar_sinal;
-}
-
-void * sensor(void * args){
-
-
-    signal(SIGUSR2,pode_mandar_sinal);
-	double * distancia = (double *) args;
+ 
+int main(){ 
+    // Pino GPIO4 é o 7 na WiringPi
+    int trigger = 7,echo =0;
+	wiringPiSetup();
 	pinMode(trigger, OUTPUT);
     pinMode(echo, INPUT);
     
@@ -20,11 +17,11 @@ void * sensor(void * args){
     printf (" Aguardando o sensor estabilizar\n");
 
     delay(1000);
-    while(1){
+    for(short int j=1;j<=10;j++){
         //printf("Cálculo de distância \n");
         double elem[20],media=0.0;
         char leitura_invalida=0;
-        for(short int i=0;i<10;i++){
+        for(short int i=0;i<20;i++){
             digitalWrite(trigger,HIGH);
             delayMicroseconds(10);
             digitalWrite(trigger,LOW);
@@ -34,7 +31,7 @@ void * sensor(void * args){
 
             while (digitalRead(echo)==0){
                 inicio_pulso = micros();
-                if((inicio_pulso - inicia_programa) > 500000){
+                if((inicio_pulso - inicia_programa)*10e-6 > 2){
                     leitura_invalida = 1;
                     break;
                 } 
@@ -56,24 +53,19 @@ void * sensor(void * args){
             elem[i]=distance;
             media+=distance;
         }
-        media/=10;
+        media/=20;
         double desvio_padrao =0.0;
-        for(short int i=0;i<10;i++){
+        for(short int i=0;i<20;i++){
             desvio_padrao += (elem[i]-media) * (elem[i]-media);
         }
-        desvio_padrao/=10;
+        desvio_padrao/=20;
         if(sqrt(desvio_padrao<0.3)){
-            //printf("Distância = %lf\n",media);
-            *distancia = media;
-            if(*distancia<=10 && mandar_sinal){
-                printf("mandei sinal\n");
-                kill(getpid(),SIGUSR1);
-                mandar_sinal = 0;
-            }
+            printf("%d- Distância = %lf\n",j,media);
         } else{
-            //printf("Descarta distância = %lf\n",media);
+            printf("%d- Descarta distância = %lf\n",j,media);
         }
+    
+       
     }
-
-    pthread_exit(0);
+    return 0;
 }
