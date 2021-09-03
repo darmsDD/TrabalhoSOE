@@ -7,5 +7,12 @@ main.o: main.c
 sensor.o: sensor.c
 	gcc $(WFLAGS) -c sensor.c
 
+sensorOriginal: sensorOriginal.c
+	gcc $(WFLAGS) -o sensorOriginal.out sensorOriginal.c
+	./sensorOriginal.out
+
+sensor2: sensor2.c
+	gcc $(WFLAGS) -o sensor2.out sensor2.c
+	./sensor2.out
 clean:
 	rm -f *.o *.out
