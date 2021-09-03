@@ -13,7 +13,7 @@ void desligaSistema(int signal){
 }
 
 void pertoObjeto(int signal){
-    printf("Robo está muito perto, recuando\n");
+    printf("Robo está muito perto, parando\n");
     digitalWrite(IN3, HIGH);
     digitalWrite(IN4, HIGH);
     digitalWrite(IN1, HIGH);
