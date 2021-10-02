@@ -1,12 +1,14 @@
 WFLAGS = -W -Wall -Wshadow -pedantic -lwiringPi -lpthread -lm
+all: sensorOriginal sensor2 motor
+
+motor: motor.c 
+	gcc $(WFLAGS) -o motor.out motor.c
+
 sensorOriginal: sensorOriginal.c
 	gcc $(WFLAGS) -o sensorOriginal.out sensorOriginal.c
-	./sensorOriginal.out
 
 sensor2: sensor2.c
-	gcc $(WFLAGS) -o seclean:
-	rm -f *.o *.outnsor2.out sensor2.c
-	./sensor2.out
+	gcc $(WFLAGS) -o sensor2.out sensor2.c
 
 clean:
 	rm -f *.o *.out

@@ -1,17 +1,10 @@
 #include "sensor.h"
 
 
-char mandar_sinal=1;
-
-void pode_mandar_sinal(int sig){
-    mandar_sinal = !mandar_sinal;
-}
-
 void * sensor(void * args){
-
-
-    signal(SIGUSR2,pode_mandar_sinal);
-	double * distancia = (double *) args;
+  
+    char * keepThreading = (char *)args;
+	
 	pinMode(trigger, OUTPUT);
     pinMode(echo, INPUT);
     
@@ -20,11 +13,13 @@ void * sensor(void * args){
     printf (" Aguardando o sensor estabilizar\n");
 
     delay(1000);
-    while(1){
+   
+    while(*keepThreading){
         //printf("Cálculo de distância \n");
         double elem[20],media=0.0;
         char leitura_invalida=0;
-        for(short int i=0;i<10;i++){
+        short int quantidade = 10;
+        for(short int i=0,j=0;i<10;i++){
             digitalWrite(trigger,HIGH);
             delayMicroseconds(10);
             digitalWrite(trigger,LOW);
@@ -34,12 +29,14 @@ void * sensor(void * args){
 
             while (digitalRead(echo)==0){
                 inicio_pulso = micros();
-                if((inicio_pulso - inicia_programa) > 500000){
+                if((inicio_pulso - inicia_programa) > 50000){
                     leitura_invalida = 1;
                     break;
                 } 
             }
             if(leitura_invalida){
+                quantidade--;
+                leitura_invalida=0;
                 continue;
             }
             
@@ -51,28 +48,34 @@ void * sensor(void * args){
             
             //printf("%d\n",duracao_pulso);
             
-            double distance = (double)duracao_pulso*1.0e-6 * 17150;
+            double distance = (double)duracao_pulso* 0.017150;
             //printf("Distance: %.2lf cm\n\n",distance);
-            elem[i]=distance;
-            media+=distance;
+            elem[j]=distance;
+            media+= distance;
+            j++;
         }
-        media/=10;
+        if(quantidade==0)continue;
+
+        media/=quantidade;
+        
+       
         double desvio_padrao =0.0;
-        for(short int i=0;i<10;i++){
+        for(short int i=0;i<quantidade;i++){
             desvio_padrao += (elem[i]-media) * (elem[i]-media);
         }
-        desvio_padrao/=10;
-        if(sqrt(desvio_padrao<0.3)){
-            //printf("Distância = %lf\n",media);
-            *distancia = media;
-            if(*distancia<=10 && mandar_sinal){
-                printf("mandei sinal\n");
-                kill(getpid(),SIGUSR1);
-                mandar_sinal = 0;
+        desvio_padrao/=quantidade;
+        if(sqrt(desvio_padrao<=1)){
+            printf("Distância = %lf\n",media);
+            int freio = digitalRead(IN1) &  digitalRead(IN2) &  digitalRead(IN3) &  digitalRead(IN4);
+            if(media<=10 && freio !=1){
+                printf("freio\n");
+                digitalWrite(IN3, HIGH);
+                digitalWrite(IN4, HIGH);
+                digitalWrite(IN1, HIGH);
+                digitalWrite(IN2, HIGH);
             }
-        } else{
-            //printf("Descarta distância = %lf\n",media);
         }
+        
     }
 
     pthread_exit(0);

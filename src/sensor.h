@@ -10,6 +10,10 @@
 
 #define trigger 2
 #define echo 3
+#define IN1 7
+#define IN2 9
+#define IN3 15
+#define IN4 16
 
 void * sensor(void * args);
 

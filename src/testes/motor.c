@@ -25,54 +25,33 @@ int main()
     pinMode(IN3, OUTPUT);
     pinMode(IN4, OUTPUT);
 
-    //sleep(10);
-    digitalWrite(IN1, HIGH);
-    digitalWrite(IN2, LOW);
-    digitalWrite(IN3, HIGH);
-    digitalWrite(IN4, LOW);
-    sleep(2);
-    digitalWrite(IN1, LOW);
-    digitalWrite(IN2, HIGH);
-    digitalWrite(IN3, LOW);
-    digitalWrite(IN4, HIGH);
-    sleep(2);
-    digitalWrite(IN1, LOW);
-    digitalWrite(IN2, LOW);
-    digitalWrite(IN3, LOW);
-    digitalWrite(IN4, LOW);
 
-
-
-
-
-
-
-   /*
+   
     while(1){
         printf("Digite 1 para sentido horário\n2 para anti-horário\n3 para ponto morto\n4 para freio\n");
         char opcao;
         scanf(" %c",&opcao);
         switch (opcao)
         {
-        case  '1'/* constant-expression :
+        case  '1'  :
             digitalWrite(IN1, HIGH);
             digitalWrite(IN2, LOW);
             digitalWrite(IN3, HIGH);
             digitalWrite(IN4, LOW);
             break;
-        case  '2'/* constant-expression :
+        case  '2'  :
             digitalWrite(IN1, LOW);
             digitalWrite(IN2, HIGH);
             digitalWrite(IN3, LOW);
             digitalWrite(IN4, HIGH);
             break;
-        case  '3'/* constant-expression :
+        case  '3'  :
             digitalWrite(IN1, LOW);
             digitalWrite(IN2, LOW);
             digitalWrite(IN3, LOW);
             digitalWrite(IN4, LOW);
             break;
-        case  '4'/* constant-expression :
+        case  '4' :
             digitalWrite(IN1, HIGH);
             digitalWrite(IN2, HIGH);
             digitalWrite(IN3, HIGH);
@@ -90,8 +69,8 @@ int main()
 
 
    
-    pause();
-    */
+    
+    
     
 	return 0;
 }
