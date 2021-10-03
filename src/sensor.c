@@ -1,28 +1,28 @@
 #include "sensor.h"
 
 
-int trigger[]{
+int trigger[] = {
     frontal1_trigger,
     frontal2_trigger,
     traseiro1_trigger,
     traseiro2_trigger,
     lateral1_trigger,
     lateral2_trigger
-}
-int echo[]{
+};
+int echo[] = {
     frontal1_echo,
     frontal2_echo,
     traseiro1_echo,
     traseiro2_echo,
     lateral1_echo,
     lateral2_echo
-}
+};
 
 
 void * sensor(void * args){
   
-	struct * sensores estrutura_sensor = (struct * sensores) args;
-    
+	struct sensores * estrutura_sensor = (struct sensores *)  args;
+    //printf("%d = ",estrutura_sensor->id_sensor);
     int trigger1 = trigger[estrutura_sensor->id_sensor];
     int echo1 = echo[estrutura_sensor->id_sensor];
     
@@ -31,11 +31,13 @@ void * sensor(void * args){
     
     digitalWrite(trigger1,LOW);
 
-    printf (" Aguardando o sensor estabilizar\n");
+    printf (" Aguardando o sensor %d estabilizar\n", estrutura_sensor->id_sensor);
 
     delay(1000);
+    printf("%d\n",trigger1);
+    printf("%d\n",echo1);
    
-    while(estrutura_sensor->continuaThread){
+    while(*(estrutura_sensor->continuaThread)){
         //printf("Cálculo de distância \n");
         double elem[20],media=0.0;
         char leitura_invalida=0;
@@ -50,10 +52,12 @@ void * sensor(void * args){
 
             while (digitalRead(echo1)==0){
                 inicio_pulso = micros();
+               // printf("estou aqui\n");
                 if((inicio_pulso - inicia_programa) > 50000){
                     leitura_invalida = 1;
                     break;
                 } 
+               
             }
             if(leitura_invalida){
                 quantidade--;
@@ -64,9 +68,8 @@ void * sensor(void * args){
             while(digitalRead(echo1)==1){
                 fim_pulso=micros();
             }
-
             duracao_pulso = fim_pulso - inicio_pulso;
-            
+            //printf("haha\n");
             //printf("%d\n",duracao_pulso);
             
             double distance = (double)duracao_pulso* 0.017150;
@@ -86,17 +89,20 @@ void * sensor(void * args){
         }
         desvio_padrao/=quantidade;
         if(sqrt(desvio_padrao<=1)){
-            printf("Distância = %lf\n",media);
-            //int freio = digitalRead(IN1) &  digitalRead(IN2) &  digitalRead(IN3) &  digitalRead(IN4);
-            if(media<=10 && estrutura_sensor-> freio == 0){
+            printf("Distância do sensor %d = %lf\n\n\n",estrutura_sensor->id_sensor,media);
+            delay(2000);
+            int freio = digitalRead(IN1) &  digitalRead(IN2) &  digitalRead(IN3) &  digitalRead(IN4);
+            if(media<=10 && freio == 0){
                 printf("freio\n");
-                softPwmWrite(IN1,100);
-                softPwmWrite(IN2,100);
-                softPwmWrite(IN3,100);
-                softPwmWrite(IN4,100);
-                estrutura_sensor-> freio = 1;
+                digitalWrite(IN1,HIGH);
+                digitalWrite(IN2,HIGH);
+                digitalWrite(IN3,HIGH);
+                digitalWrite(IN4,HIGH);
+                //softPwmWrite(IN5,0);
+                //softPwmWrite(IN6,0);
             }
         }
+        //printf("%d\n",estrutura_sensor->continuaThread);
         
     }
 
