@@ -15,6 +15,8 @@ void desligaSistema(int signal){
 int main()
 {
 
+    mapa();
+    return 0;
     signal(SIGINT,desligaSistema);
  // Pino GPIO4 é o 7 na WiringPi
 	wiringPiSetup();

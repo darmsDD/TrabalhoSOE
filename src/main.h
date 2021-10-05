@@ -4,7 +4,7 @@
 #include<stdlib.h>
 #include "sensor.h"
 #include <softPwm.h>
-
+#include"mapa.h"
 
 #define frontal1 0
 #define frontal2 1

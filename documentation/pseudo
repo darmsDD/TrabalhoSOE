@@ -1,0 +1,25 @@
+\begin{verbatim}
+## Pseudo código do funcionamento do sistema
+    ativaWiringPi()
+    setaPinosdosMotores()
+    setaPinosdosSensores()
+    thread_sensores_pega_distancia()
+    
+    while 1
+        if distanciaFrontal < 5 cm
+            recua_robo()
+        else if distanciaLateral < 5 cm
+            tira_robo_perto_parede()
+        else 
+            robo_anda()
+
+\end{verbatim}
+
+        
+
+        
+    
+    
+        
+    
+
