@@ -1,20 +1,31 @@
 #include"mapa.h"
 
-#define N 10000
+#define N 910
 
-void mapa(){
+char mapa[N][N];
 
-    char mapa[N][N];
-
-    memset(&mapa,0,sizeof(mapa));
-
-
+void inicia_mapa(){
     for(int i=0;i<N;i++){
         for(int j=0;j<N;j++){
-            printf("%d",mapa[i][j]);
+            mapa[i][j]=' ';
+        }
+    }
+   /* printf("%d\n",N);
+    for(int i=0;i<N;i++){
+        for(int j=0;j<N;j++){
+            printf("%c",mapa[i][j]);
         }
         printf("\n");
     }
+    */
+}
+
+void carrinhoSozinho(){
+    
+    int distanciaFrontal = 0;
+    int distanciaLateral=0;
+    int distanciaTraseira=0;
 
 
+    
 }

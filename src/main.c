@@ -15,12 +15,14 @@ void desligaSistema(int signal){
 int main()
 {
 
-    mapa();
-    return 0;
+    //mapas();
+    //return 0;
+
+
     signal(SIGINT,desligaSistema);
  // Pino GPIO4 é o 7 na WiringPi
 	wiringPiSetup();
-    
+    /*
     struct sensores estrutura_sensores[5];
     for(int i=0;i<5;i++){
         estrutura_sensores[i].id_sensor = i;
@@ -32,10 +34,10 @@ int main()
     pthread_create(&sensor_traseiro[1],NULL,&sensor,&estrutura_sensores[3]);
     pthread_create(&sensor_lateral[0],NULL,&sensor,&estrutura_sensores[4]);
     //pthread_create(&sensor_lateral[1],NULL,&sensor,&estrutura_sensores[5]);
-    
+    */
 
 
-    delay(2000);
+    //delay(2000);
 
     pinMode(IN1,OUTPUT);
     pinMode(IN2,OUTPUT);
@@ -54,19 +56,16 @@ int main()
         case  '1'/* horário */:
             
             printf("Digite a velocidade\n");
-            scanf("%d",&velocidade);
+            //scanf("%d",&velocidade);
             digitalWrite(IN1,LOW);
             digitalWrite(IN2,HIGH);
             digitalWrite(IN3, LOW);
             digitalWrite(IN4, HIGH);
-            softPwmWrite(IN6,velocidade);
-            softPwmWrite(IN5,velocidade - 5);
+            softPwmWrite(IN6,100);
+            softPwmWrite(IN5,100);
             
             break;
         case  '2'/* anti-horário */:
-            
-            
-
             digitalWrite(IN3, HIGH);
             digitalWrite(IN4, LOW);
             digitalWrite(IN1, HIGH);
@@ -85,8 +84,6 @@ int main()
             break;
         case  '4'/* freio */:
 
-            
-
             digitalWrite(IN1, HIGH);
             digitalWrite(IN2, HIGH);
             digitalWrite(IN3, HIGH);
@@ -95,7 +92,26 @@ int main()
             //softPwmWrite(IN6,0);
             break;
         
-        
+        case '5'/* giro pra direita*/:
+
+            digitalWrite(IN1, HIGH);
+            digitalWrite(IN2, LOW);
+            digitalWrite(IN3, HIGH);
+            digitalWrite(IN4, HIGH);
+            softPwmWrite(IN5,100);
+            //softPwmWrite(IN6,0);
+            break;
+
+        case '6'/* giro pra esquerda*/:
+
+            digitalWrite(IN1, HIGH);
+            digitalWrite(IN2, HIGH);
+            digitalWrite(IN3, HIGH);
+            digitalWrite(IN4, LOW);
+            softPwmWrite(IN6,100);
+            //softPwmWrite(IN6,0);
+            break;
+
         default:
             break;
         }

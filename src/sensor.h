@@ -27,8 +27,8 @@
 // definições dos pinos para os motores
 #define IN1 8
 #define IN2 9
-#define IN3 15
-#define IN4 16
+#define IN3 16
+#define IN4 15
 #define IN5 7
 #define IN6 1
 
