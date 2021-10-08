@@ -4,7 +4,8 @@
 #include <stdlib.h>
 #include "sensor.h"
 #include <softPwm.h>
-#include "mapa.h"
+#include "motor.h"
+#include<signal.h>
 
 #define frontal1 0
 #define frontal2 1
@@ -13,7 +14,7 @@
 #define lateral1 4
 #define lateral2 4
 
-struct sensores estrutura_sensores[3];
+
 pthread_t sensor_frontal[2],sensor_lateral[2],sensor_traseiro[2];
 char keepThreading = 1;
 

@@ -3,6 +3,9 @@
 
 #include <wiringPi.h>
 #include <softPwm.h>
+#include<signal.h>
+#include<stdio.h>
+#include<unistd.h>
 
 #define IN1 8
 #define IN2 9
@@ -12,9 +15,13 @@
 #define IN6 1
 
 
-void gira_carrinho(int lateral1, int lateral2);
+void gira_carrinho(double lateral1, double lateral2);
 void para_carrinho();
 void anda_pra_frente();
 void anda_pra_tras();
+void gira_pra_esquerda();
+void gira_pra_direita();
+void ponto_morto();
+void inicia_motor();
 
 #endif

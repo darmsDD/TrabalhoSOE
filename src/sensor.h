@@ -8,9 +8,10 @@
 #include<signal.h>
 #include<unistd.h>
 #include <softPwm.h>
+#include "motor.h"
 
-#define frontal1_trigger 0
-#define frontal1_echo 2
+#define frontal1_trigger 4
+#define frontal1_echo 5
 #define frontal2_trigger 4
 #define frontal2_echo 5
 
@@ -19,30 +20,23 @@
 #define traseiro2_trigger 6
 #define traseiro2_echo 10
 
-#define lateral1_trigger 4
-#define lateral1_echo 5
+#define lateral1_trigger 0
+#define lateral1_echo  2
 #define lateral2_trigger 12
 #define lateral2_echo 13
 
-// definições dos pinos para os motores
-#define IN1 8
-#define IN2 9
-#define IN3 16
-#define IN4 15
-#define IN5 7
-#define IN6 1
+
 
 
 struct sensores {
     int id_sensor;
     char * continuaThread;
     double distancia;
+    int num;
 };
 
+struct sensores estrutura_sensores[3];
 void * sensor(void * args);
-
-void gira_carrinho(int lateral1, int lateral2);
-void para_carrinho();
 
 
 #endif
