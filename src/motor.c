@@ -1,20 +1,14 @@
 #include "motor.h"
 
 void gira_carrinho(double lateral1, double lateral2){
-    printf("lateral1:%lf lateral2:%lf\n",lateral1,lateral2);
+    
     if(lateral1>10){
-        printf("gira esquerda\n");
-        //gira pra esquerda
         gira_pra_esquerda();
     } else if(lateral2>10){
-        printf("gira direita\n");
-        //gira pra direita
         gira_pra_direita();
     } else{
-        printf("Carrinho parando\n");
-        kill(getpid(),SIGINT);
+        para_carrinho();
     }
-
 
 }
 

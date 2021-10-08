@@ -4,13 +4,9 @@ void desligaSistema(int signal){
     
     para_carrinho();
     keepThreading=0;
-    printf("hahha\n");
     pthread_join(sensor_frontal[0],NULL);
-   //pthread_join(sensor_frontal[1],NULL);
     pthread_join(sensor_lateral[0],NULL);
     pthread_join(sensor_lateral[1],NULL);
-    //pthread_join(sensor_traseiro[0],NULL);
-    printf("hahha2\n");
     digitalWrite(frontal1_trigger,LOW);
     digitalWrite(lateral1_trigger,LOW);
     digitalWrite(lateral2_trigger,LOW);
@@ -21,11 +17,8 @@ void desligaSistema(int signal){
 int main()
 {
 
-    //mapas();
-    //return 0;
 
     signal(SIGINT,desligaSistema);
- // Pino GPIO4 é o 7 na WiringPi
 	wiringPiSetup();
     
     
@@ -39,19 +32,14 @@ int main()
     pthread_create(&sensor_frontal[0],NULL,&sensor,&estrutura_sensores[0]);
     pthread_create(&sensor_lateral[0],NULL,&sensor,&estrutura_sensores[1]);
     pthread_create(&sensor_lateral[1],NULL,&sensor,&estrutura_sensores[2]);
-    /*pthread_create(&sensor_frontal[1],NULL,&sensor,&estrutura_sensores[1]);
-    pthread_create(&sensor_traseiro[0],NULL,&sensor,&estrutura_sensores[2]);
-    pthread_create(&sensor_traseiro[1],NULL,&sensor,&estrutura_sensores[3]);
-    pthread_create(&sensor_lateral[0],NULL,&sensor,&estrutura_sensores[4]);
-    //pthread_create(&sensor_lateral[1],NULL,&sensor,&estrutura_sensores[5]);
-    */
 
     inicia_motor();
 
     delay(2000);
   
     while(1){
-        printf("Digite 1 para sentido horário\n2 para anti-horário\n3 para ponto morto\n4 para freio\n5 para girar para direita\n6 para gira para esquerda\n");
+        printf("Digite\n1 para sentido horário\n2 para anti-horário\n3 para ponto morto\n4 para freio\n");
+        printf("5 para girar para direita\n6 para gira para esquerda\n\n");
         char opcao;
         scanf(" %c",&opcao);
         int velocidade;

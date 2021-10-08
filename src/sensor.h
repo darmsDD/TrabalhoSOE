@@ -12,13 +12,13 @@
 
 #define frontal1_trigger 4
 #define frontal1_echo 5
-#define frontal2_trigger 4
-#define frontal2_echo 5
+#define frontal2_trigger  6
+#define frontal2_echo 10
 
-#define traseiro1_trigger 12
-#define traseiro1_echo 13
-#define traseiro2_trigger 6
-#define traseiro2_echo 10
+#define traseiro1_trigger 11
+#define traseiro1_echo 31
+#define traseiro2_trigger 4
+#define traseiro2_echo 5
 
 #define lateral1_trigger 0
 #define lateral1_echo  2

@@ -88,6 +88,7 @@ void * func(void *args){
                 direcao = (direcao==1)?2:1;
                 //kill(getpid(),SIGINT);
                 i=-1;
+                sleep(1);
                 continue;
         }
 
