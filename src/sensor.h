@@ -35,7 +35,7 @@ struct sensores {
     int num;
 };
 
-struct sensores estrutura_sensores[3];
+struct sensores estrutura_sensores[4];
 void * sensor(void * args);
 
 
