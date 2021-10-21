@@ -37,7 +37,7 @@ struct sensores {
     int num;
 };
 
-pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t cadeado = PTHREAD_MUTEX_INITIALIZER;
 
 struct sensores estrutura_sensores[5];
 void * sensor(void * args);
