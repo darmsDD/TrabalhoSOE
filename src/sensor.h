@@ -37,7 +37,7 @@ struct sensores {
     int num;
 };
 
-struct sensores estrutura_sensores[4];
+struct sensores estrutura_sensores[5];
 void * sensor(void * args);
 int objeto_na_frente();
 void para_depois_anda();

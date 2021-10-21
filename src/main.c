@@ -1,6 +1,6 @@
 #include "main.h"
 
-void desligaSistema(int signal){
+void desligaSistema(){
     
     para_carrinho();
     keepThreading=0;
@@ -44,7 +44,6 @@ int main()
         printf("5 para girar para direita\n6 para gira para esquerda\n\n");
         char opcao;
         scanf(" %c",&opcao);
-        int velocidade;
         switch (opcao)
         {
         case  '1'/* horário */:
