@@ -23,7 +23,7 @@ int main()
     
     
     int id[]={frontal_esquerda,frontal_direita,lateral_esquerdo,lateral_direito,traseiro};
-    for(int i=0;i<4;i++){
+    for(int i=0;i<5;i++){
         estrutura_sensores[i].id_sensor = id[i];
         estrutura_sensores[i].continuaThread = &keepThreading ;
         estrutura_sensores[i].num = i;
