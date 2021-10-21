@@ -37,7 +37,7 @@ void para_depois_anda(){
     anda_pra_frente();
 }
 
-void distancia_valida(double desvio_padrao,int cont,double media)
+void distancia_valida(double desvio_padrao,int cont,double media,int id,struct sensores * estrutura_sensor)
 {
     int esquerda = 1,direita=0;
     if(sqrt(desvio_padrao<=1)){
@@ -138,7 +138,7 @@ void * sensor(void * args){
         }
 
         desvio_padrao/=quantidade;
-        distancia_valida(desvio_padrao,cont,media);
+        distancia_valida(desvio_padrao,cont,media,id,estrutura_sensor);
         
     }
 
