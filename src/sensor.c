@@ -103,7 +103,7 @@ void * sensor(void * args){
         desvio_padrao/=quantidade;
         if(sqrt(desvio_padrao<=1)){
             estrutura_sensores[cont].distancia = media;
-            //printf("Distância do sensor %s = %lf,\n\n\n",nome_sensores[id],estrutura_sensores[cont].distancia);
+            printf("Distância do sensor %s = %lf,\n\n\n",nome_sensores[id],estrutura_sensores[cont].distancia);
             int freio = digitalRead(RODA_ESQUERDA_1) &  digitalRead(RODA_ESQUERDA_2) &  digitalRead(RODA_DIREITA_1) &  digitalRead(RODA_DIREITA_2);
             if(media<=10 && freio == 0 && (estrutura_sensor->id_sensor==0 || estrutura_sensor->id_sensor==1)){
                 para_carrinho();
