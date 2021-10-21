@@ -18,8 +18,7 @@ int echo[] = {
 
 char nome_sensores [][20] = 
     {"frontal_esquerda","frontal_direita",
-    "traseiro_esquerda","traseiro_direita ",
-    "lateral_esquerdo","lateral_direito"};
+    "traseiro","lateral_esquerdo","lateral_direito"};
 
 
 
