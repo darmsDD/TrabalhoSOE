@@ -41,8 +41,8 @@ void distancia_valida(double desvio_padrao,int cont,double media,int id,struct s
     int esquerda = 1,direita=0;
     if(sqrt(desvio_padrao<=1)){
         estrutura_sensores[cont].distancia = media;
-        printf("Distância do sensor %s = %lf,\n\n\n",nome_sensores[id],estrutura_sensores[cont].distancia);
-        delay(2000);
+        //printf("Distância do sensor %s = %lf,\n\n\n",nome_sensores[id],estrutura_sensores[cont].distancia);
+        //delay(2000);
         if(media<=10 && (estrutura_sensor->id_sensor==frontal_esquerda || estrutura_sensor->id_sensor==frontal_direita)){
             objeto_na_frente();
         } else if(media<=10 && (estrutura_sensor->id_sensor==lateral_esquerdo || estrutura_sensor->id_sensor==lateral_direito)){
