@@ -38,7 +38,7 @@ void * sensor(void * args){
     
     digitalWrite(trigger1,LOW);
 
-    printf (" Aguardando o sensor %d estabilizar\n", id);
+    printf (" Aguardando o sensor %s estabilizar\n", nome_sensores[id]);
 
     delay(1000);
    
