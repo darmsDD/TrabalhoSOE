@@ -7,9 +7,9 @@ void desligaSistema(int signal){
     pthread_join(sensor_frontal[0],NULL);
     pthread_join(sensor_lateral[0],NULL);
     pthread_join(sensor_lateral[1],NULL);
-    digitalWrite(frontal1_trigger,LOW);
-    digitalWrite(lateral1_trigger,LOW);
-    digitalWrite(lateral2_trigger,LOW);
+    digitalWrite(frontal_esquerda_trigger,LOW);
+    digitalWrite(lateral_esquerda_trigger,LOW);
+    digitalWrite(lateral_direita_trigger,LOW);
     exit(0);
 }
 
@@ -22,7 +22,7 @@ int main()
 	wiringPiSetup();
     
     
-    int id[]={0,4,5};
+    int id[]={frontal_esquerda,lateral_esquerdo,lateral_direito};
     for(int i=0;i<3;i++){
         estrutura_sensores[i].id_sensor = id[i];
         estrutura_sensores[i].continuaThread = &keepThreading ;

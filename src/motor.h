@@ -7,15 +7,15 @@
 #include<stdio.h>
 #include<unistd.h>
 
-#define IN1 8
-#define IN2 9
-#define IN3 16
-#define IN4 15
-#define IN5 7
-#define IN6 1
+#define RODA_ESQUERDA_1 8
+#define RODA_ESQUERDA_2 9
+#define RODA_DIREITA_1 16
+#define RODA_DIREITA_2 15
+#define PWM_RODA_ESQUERDA 7
+#define PWM_RODA_DIREITA 1
 
 
-void gira_carrinho(double lateral1, double lateral2);
+void gira_carrinho(double lateral_esquerda, double lateral_direita);
 void para_carrinho();
 void anda_pra_frente();
 void anda_pra_tras();

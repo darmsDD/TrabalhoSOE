@@ -2,21 +2,27 @@
 
 
 int trigger[] = {
-    frontal1_trigger,
-    frontal2_trigger,
-    traseiro1_trigger,
-    traseiro2_trigger,
-    lateral1_trigger,
-    lateral2_trigger
+    frontal_esquerda_trigger,
+    frontal_direita_trigger,
+    traseiro_esquerdo_trigger,
+    traseiro_direito_trigger,
+    lateral_esquerda_trigger,
+    lateral_direita_trigger
 };
 int echo[] = {
-    frontal1_echo,
-    frontal2_echo,
-    traseiro1_echo,
-    traseiro2_echo,
-    lateral1_echo,
-    lateral2_echo
+    frontal_esquerda_echo,
+    frontal_direita_echo,
+    traseiro_esquerdo_echo,
+    traseiro_direito_echo,
+    lateral_esquerda_echo,
+    lateral_direita_echo
 };
+
+char nome_sensores [][20] = 
+    {"frontal_esquerda","frontal_direita",
+    "traseiro_esquerda","traseiro_direita ",
+    "lateral_esquerdo","lateral_direito"};
+
 
 void * sensor(void * args){
   
@@ -32,7 +38,7 @@ void * sensor(void * args){
     
     digitalWrite(trigger1,LOW);
 
-    printf (" Aguardando o sensor %d estabilizar\n", id);
+    printf (" Aguardando o sensor %s estabilizar\n", nome_sensores[id]);
 
     delay(1000);
    
@@ -97,12 +103,12 @@ void * sensor(void * args){
         desvio_padrao/=quantidade;
         if(sqrt(desvio_padrao<=1)){
             estrutura_sensores[cont].distancia = media;
-            //printf("Distância do sensor %d = %lf,\n\n\n",id,estrutura_sensores[cont].distancia);
-            int freio = digitalRead(IN1) &  digitalRead(IN2) &  digitalRead(IN3) &  digitalRead(IN4);
+            //printf("Distância do sensor %s = %lf,\n\n\n",nome_sensores[id],estrutura_sensores[cont].distancia);
+            int freio = digitalRead(RODA_ESQUERDA_1) &  digitalRead(RODA_ESQUERDA_2) &  digitalRead(RODA_DIREITA_1) &  digitalRead(RODA_DIREITA_2);
             if(media<=10 && freio == 0 && estrutura_sensor->id_sensor==0){
                 para_carrinho();
                 gira_carrinho(estrutura_sensores[2].distancia,estrutura_sensores[1].distancia);
-                delay(710);
+                delay(1650);
                 para_carrinho();
                 delay(1000);
                 anda_pra_frente();

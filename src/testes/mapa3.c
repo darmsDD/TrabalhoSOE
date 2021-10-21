@@ -21,13 +21,13 @@ double sensorFrontal[] = {
         30,28.7,25.2,26.2,24,23
 };
 
-double sensorlateral_esquerda[] = {
+double sensorLateral1[] = {
     1200,1200,1200,1200,1200,
-    30,30,30,30,30,30
+    30,25,20,15,10,5
 };
-double sensorlateral_direita[] = {
+double sensorLateral2[] = {
     1200,1200,1200,1200,1200,
-    30,30,30,30,30,30
+    1200,1200,1200,1200,1200,1200,1200,1200
 };
 double sensorTraseiro[] = {
     1200,1200,1200,1200,1200,
@@ -56,12 +56,12 @@ void imprime_mapa(){
 void preenche_mapa_obstaculo(int l,int c,int vertical,int sensor){
    
     if(vertical){
-        printf("%d =  %d - %d    vertical = %d\n",l,pos[0], sensor,vertical);
+        printf("%d =  %d - %d\n",l,pos[0], sensor);
         for(int j=0;j<4;j++){
             mapa[l][c+j] = '1';
         }
     } else{
-        printf("%d =  %d - %d     vertical = %d\n",c,pos[1], sensor,vertical);
+        printf("%d =  %d - %d\n",c,pos[1], sensor);
         for(int j=0;j<4;j++){
             mapa[l+j][c] = '1';
         }
@@ -69,60 +69,42 @@ void preenche_mapa_obstaculo(int l,int c,int vertical,int sensor){
 }
 
 
-
-void switch_obstaculos(int direc,int distancia_obstaculo){
-    int l,c,vertical;
-    switch (direc)
-    {
-        case 1/*para cima*/:
-            l = pos[0] - distancia_obstaculo;
-            c = pos[1]-1;
-            vertical=1;
-            break;
-        case 2/*para esquerda*/:
-            c = pos[1] - distancia_obstaculo;
-            l = pos[0]-1;
-            vertical=0;
-            break;
-        case 3/*para baixo*/:
-            l = pos[0] + distancia_obstaculo;
-            c = pos[1]-1;
-            vertical=1;
-            break;
-        case 4/*para direita*/:
-            c = pos[1] + distancia_obstaculo;
-            l = pos[0]-1;
-            vertical=0;
-            break;
-    }
-    preenche_mapa_obstaculo(l,c,vertical,distancia_obstaculo);
-
-}
-
-
 void * obstaculos(){
 
-    int direc;
+    int l,c,vertical;
     for(int i=0;i<11;i++){
         printf("sensor frontal[%d] = %lf\n",i,sensorFrontal[i]);
-        printf("sensor lateral esquerda[%d] = %lf\n",i,sensorlateral_esquerda[i]);
         if(sensorFrontal[i]<1200){
-            switch_obstaculos(direcao,round(sensorFrontal[i]));
-        } 
-        if(sensorlateral_esquerda[i]<1200){
-            direc = direcao%4 +1;
-            switch_obstaculos(direc,round(sensorlateral_esquerda[i]));
-        }
-        if(sensorlateral_direita[i]<1200){
-            direc = direcao -1 ;
-            if(direc==0){direc=4;}
-            switch_obstaculos(direc,round(sensorlateral_esquerda[i]));
-        }
+            printf("entrei aqui\n");
+            switch (direcao)
+            {
+                case 1/*para cima*/:
+                    l = pos[0] - round(sensorFrontal[i]);
+                    c = pos[1]-1;
+                    vertical=1;
+                    break;
+                case 2/*para esquerda*/:
+                    c = pos[1] - round(sensorFrontal[i]);
+                    l = pos[0]-1;
+                    vertical=0;
+                    break;
+                case 3/*para baixo*/:
+                    l = pos[0] + round(sensorFrontal[i]);
+                    c = pos[1]-1;
+                    vertical=1;
+                    break;
+                case 4/*para direita*/:
+                    c = pos[1] + round(sensorFrontal[i]);
+                    l = pos[0]-1;
+                    vertical=0;
+                    break;
+            }
+            preenche_mapa_obstaculo(l,c,vertical,round(sensorFrontal[i]));
 
-        
+        }
         sleep(1);
     }
-    pthread_exit(0);
+
 
 }
 
