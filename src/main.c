@@ -10,6 +10,7 @@ void desligaSistema(){
     digitalWrite(frontal_esquerda_trigger,LOW);
     digitalWrite(lateral_esquerda_trigger,LOW);
     digitalWrite(lateral_direita_trigger,LOW);
+    pthread_mutex_destroy(&lock);
     exit(0);
 }
 
