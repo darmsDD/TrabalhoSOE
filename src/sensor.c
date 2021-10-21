@@ -128,6 +128,11 @@ void * sensor(void * args){
                 } else if(lado == direita){
                     gira_pra_esquerda();
                 }
+                delay(1650);
+                para_carrinho();
+                delay(1000);
+                anda_pra_frente();
+
                 
             }
            
