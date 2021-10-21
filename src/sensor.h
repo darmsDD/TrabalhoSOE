@@ -15,10 +15,8 @@
 #define frontal_direita_trigger  12
 #define frontal_direita_echo 13
 
-#define traseiro_esquerdo_trigger 11
-#define traseiro_esquerdo_echo 31
-#define traseiro_direito_trigger 4
-#define traseiro_direito_echo 5
+#define traseiro_trigger 21
+#define traseiro_echo 22
 
 #define lateral_esquerda_trigger 0
 #define lateral_esquerda_echo  2
@@ -27,10 +25,9 @@
 
 #define frontal_esquerda 0
 #define frontal_direita 1
-#define traseiro_esquerda 2
-#define traseiro_direita 3
-#define lateral_esquerdo 4
-#define lateral_direito 5
+#define traseiro 2
+#define lateral_esquerdo 3
+#define lateral_direito 4
 
 
 struct sensores {

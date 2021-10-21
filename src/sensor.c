@@ -4,16 +4,14 @@
 int trigger[] = {
     frontal_esquerda_trigger,
     frontal_direita_trigger,
-    traseiro_esquerdo_trigger,
-    traseiro_direito_trigger,
+    traseiro_trigger,
     lateral_esquerda_trigger,
     lateral_direita_trigger
 };
 int echo[] = {
     frontal_esquerda_echo,
     frontal_direita_echo,
-    traseiro_esquerdo_echo,
-    traseiro_direito_echo,
+    traseiro_echo,
     lateral_esquerda_echo,
     lateral_direita_echo
 };
@@ -24,10 +22,48 @@ char nome_sensores [][20] =
     "lateral_esquerdo","lateral_direito"};
 
 
+
+int objeto_na_frente(){
+    para_carrinho();
+    int lado = gira_carrinho(estrutura_sensores[3].distancia,estrutura_sensores[2].distancia);
+    delay(700);
+    para_depois_anda();
+    return lado;
+}
+
+void para_depois_anda(){
+    para_carrinho();
+    delay(1000);
+    anda_pra_frente();
+}
+
+void distancia_valida(double desvio_padrao,int cont,double media)
+{
+    int esquerda = 1,direita=0;
+    if(sqrt(desvio_padrao<=1)){
+        estrutura_sensores[cont].distancia = media;
+        printf("Distância do sensor %s = %lf,\n\n\n",nome_sensores[id],estrutura_sensores[cont].distancia);
+        if(media<=10 && (estrutura_sensor->id_sensor==frontal_esquerda || estrutura_sensor->id_sensor==frontal_direita)){
+            objeto_na_frente();
+        } else if(media<=10 && (estrutura_sensor->id_sensor==lateral_esquerdo || estrutura_sensor->id_sensor==lateral_direito)){
+            int lado = objeto_na_frente();
+            delay(1000);
+            if(lado == esquerda){
+                gira_pra_direita();
+            } else if(lado == direita){
+                gira_pra_esquerda();
+            }
+            delay(600);
+            para_depois_anda();
+        }
+           
+    }
+}
+
+
 void * sensor(void * args){
   
 	struct sensores * estrutura_sensor = (struct sensores *)  args;
-    int esquerda = 1,direita=0;
     int cont = estrutura_sensor->num;
     int id = estrutura_sensor->id_sensor;
     int trigger1 = trigger[id];
@@ -102,42 +138,7 @@ void * sensor(void * args){
         }
 
         desvio_padrao/=quantidade;
-        //distancia_valida(desvio_padrao);
-        
-        if(sqrt(desvio_padrao<=1)){
-            estrutura_sensores[cont].distancia = media;
-            printf("Distância do sensor %s = %lf,\n\n\n",nome_sensores[id],estrutura_sensores[cont].distancia);
-            int freio = digitalRead(RODA_ESQUERDA_1) &  digitalRead(RODA_ESQUERDA_2) &  digitalRead(RODA_DIREITA_1) &  digitalRead(RODA_DIREITA_2);
-            if(media<=10 && freio == 0 && (estrutura_sensor->id_sensor==frontal_esquerda || estrutura_sensor->id_sensor==frontal_direita)){
-                para_carrinho();
-                gira_carrinho(estrutura_sensores[3].distancia,estrutura_sensores[2].distancia);
-                delay(1650);
-                para_carrinho();
-                delay(1000);
-                anda_pra_frente();
-            } else if(media<=10 && freio == 0 && (estrutura_sensor->id_sensor==lateral_esquerdo || estrutura_sensor->id_sensor==lateral_direito)){
-                para_carrinho();
-                int lado = gira_carrinho(estrutura_sensores[3].distancia,estrutura_sensores[2].distancia);
-                delay(1650);
-                para_carrinho();
-                delay(1000);
-                anda_pra_frente();
-                delay(1000);
-                if(lado == esquerda){
-                    gira_pra_direita();
-                } else if(lado == direita){
-                    gira_pra_esquerda();
-                }
-                delay(1650);
-                para_carrinho();
-                delay(1000);
-                anda_pra_frente();
-
-                
-            }
-           
-        }
-        
+        distancia_valida(desvio_padrao,cont,media);
         
     }
 
