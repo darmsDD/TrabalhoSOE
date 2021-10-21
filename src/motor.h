@@ -15,7 +15,7 @@
 #define PWM_RODA_DIREITA 1
 
 
-void gira_carrinho(double lateral_esquerda, double lateral_direita);
+int gira_carrinho(double lateral_esquerda, double lateral_direita);
 void para_carrinho();
 void anda_pra_frente();
 void anda_pra_tras();
