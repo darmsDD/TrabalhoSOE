@@ -8,7 +8,7 @@
 #include<signal.h>
 
 
-pthread_t sensor_frontal[2],sensor_lateral[2],sensor_traseiro[2];
+pthread_t sensor_frontal[2],sensor_lateral[2],sensor_traseiro;
 char keepThreading = 1;
 
 

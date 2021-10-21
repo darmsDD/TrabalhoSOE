@@ -22,7 +22,7 @@ int main()
 	wiringPiSetup();
     
     
-    int id[]={frontal_esquerda,frontal_direita,lateral_esquerdo,lateral_direito};
+    int id[]={frontal_esquerda,frontal_direita,lateral_esquerdo,lateral_direito,traseiro};
     for(int i=0;i<4;i++){
         estrutura_sensores[i].id_sensor = id[i];
         estrutura_sensores[i].continuaThread = &keepThreading ;
@@ -33,6 +33,7 @@ int main()
     pthread_create(&sensor_frontal[1],NULL,&sensor,&estrutura_sensores[1]);
     pthread_create(&sensor_lateral[0],NULL,&sensor,&estrutura_sensores[2]);
     pthread_create(&sensor_lateral[1],NULL,&sensor,&estrutura_sensores[3]);
+    pthread_create(&sensor_traseiro,NULL,&sensor,&estrutura_sensores[4]);
 
     inicia_motor();
 
