@@ -37,8 +37,6 @@ struct sensores {
     int num;
 };
 
-pthread_mutex_t cadeado = PTHREAD_MUTEX_INITIALIZER;
-
 struct sensores estrutura_sensores[5];
 void * sensor(void * args);
 int objeto_na_frente();

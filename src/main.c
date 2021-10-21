@@ -1,4 +1,5 @@
 #include "main.h"
+extern pthread_mutex_t cadeado;
 
 void desligaSistema(){
     

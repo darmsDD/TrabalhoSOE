@@ -1,5 +1,5 @@
 #include "sensor.h"
-
+pthread_mutex_t cadeado = PTHREAD_MUTEX_INITIALIZER;
 
 int trigger[] = {
     frontal_esquerda_trigger,
@@ -23,7 +23,7 @@ char nome_sensores [][20] =
 int objeto_na_frente(){
     para_carrinho();
     int lado = gira_carrinho(estrutura_sensores[3].distancia,estrutura_sensores[2].distancia);
-    delay(700);
+    delay(1750);
     para_depois_anda();
     return lado;
 }
@@ -32,6 +32,7 @@ void para_depois_anda(){
     para_carrinho();
     delay(1000);
     anda_pra_frente();
+    delay(1000);
 }
 
 void distancia_valida(double desvio_padrao,int cont,double media,int id,struct sensores * estrutura_sensor)
@@ -45,10 +46,9 @@ void distancia_valida(double desvio_padrao,int cont,double media,int id,struct s
             pthread_mutex_lock(&cadeado);
             objeto_na_frente();
             pthread_mutex_unlock(&cadeado);
-        } else if(media<=10 && (estrutura_sensor->id_sensor==lateral_esquerdo || estrutura_sensor->id_sensor==lateral_direito)){
+        } else if(media<=5 && (estrutura_sensor->id_sensor==lateral_esquerdo || estrutura_sensor->id_sensor==lateral_direito)){
             pthread_mutex_lock(&cadeado);
             int lado = objeto_na_frente();
-            delay(1000);
             if(lado == esquerda){
                 gira_pra_direita();
             } else if(lado == direita){
