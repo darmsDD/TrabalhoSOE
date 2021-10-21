@@ -27,7 +27,7 @@ void anda_pra_frente(){
     digitalWrite(RODA_ESQUERDA_2,HIGH);
     digitalWrite(RODA_DIREITA_1, LOW);
     digitalWrite(RODA_DIREITA_2, HIGH);
-    softPwmWrite(PWM_RODA_DIREITA,100);
+    softPwmWrite(PWM_RODA_DIREITA,80);
     softPwmWrite(PWM_RODA_ESQUERDA,100);
 }
 
@@ -37,7 +37,7 @@ void anda_pra_tras(){
     digitalWrite(RODA_ESQUERDA_1, HIGH);
     digitalWrite(RODA_ESQUERDA_2, LOW);
     softPwmWrite(PWM_RODA_ESQUERDA,100);
-    softPwmWrite(PWM_RODA_DIREITA,100);
+    softPwmWrite(PWM_RODA_DIREITA,80);
 }
 
 void gira_pra_direita(){

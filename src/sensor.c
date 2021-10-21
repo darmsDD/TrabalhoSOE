@@ -108,7 +108,7 @@ void * sensor(void * args){
             if(media<=10 && freio == 0 && estrutura_sensor->id_sensor==0){
                 para_carrinho();
                 gira_carrinho(estrutura_sensores[2].distancia,estrutura_sensores[1].distancia);
-                delay(710);
+                delay(1650);
                 para_carrinho();
                 delay(1000);
                 anda_pra_frente();
