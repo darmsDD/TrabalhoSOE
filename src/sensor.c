@@ -47,7 +47,7 @@ void distancia_valida(double desvio_padrao,int cont,double media,int id,struct s
         
         } else if(media<=5 && (estrutura_sensor->id_sensor==lateral_esquerdo || estrutura_sensor->id_sensor==lateral_direito)){
         
-            pthread_mutex_lock(&cadeado);
+            //pthread_mutex_lock(&cadeado);
             int lado = objeto_na_frente(0,estrutura_sensores[3].distancia,estrutura_sensores[2].distancia);
             if(lado == esquerda){
                 gira_pra_direita();
@@ -58,7 +58,7 @@ void distancia_valida(double desvio_padrao,int cont,double media,int id,struct s
             }
             delay(600);
             para_depois_anda();
-            pthread_mutex_unlock(&cadeado);
+            //pthread_mutex_unlock(&cadeado);
             
         
         }

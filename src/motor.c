@@ -17,15 +17,18 @@ int gira_carrinho(double lateral_esquerda, double lateral_direita){
 }
 
 int objeto_na_frente(int opcao, double sensor_esquerdo,double sensor_direito){
+    printf("etapa1\n");
     para_carrinho();
     delay(2000);
     int lado = gira_carrinho(sensor_esquerdo,sensor_direito);
+    printf("etapa2\n");
     if(opcao==1){
         delay(1950);
     } else {
         delay(800);
     }
     para_depois_anda();
+    printf("etapa3\n");
     return lado;
 }
 

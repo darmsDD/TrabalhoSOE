@@ -8,14 +8,16 @@ extern pthread_mutex_t cadeado_mapa;
 void desligaSistema(){
     
     keepThreading=0;
+    para_carrinho();
+    pthread_join(t_mapa,NULL);
+    pthread_join(t_obstaculos,NULL);
+    imprime_mapa();
+    
     pthread_join(sensor_frontal[0],NULL);
     pthread_join(sensor_lateral[0],NULL);
     pthread_join(sensor_lateral[1],NULL);
     pthread_join(sensor_frontal[1],NULL);
-    pthread_join(t_mapa,NULL);
-    pthread_join(t_obstaculos,NULL);
-    para_carrinho();
-    imprime_mapa();
+   
     digitalWrite(frontal_esquerda_trigger,LOW);
     digitalWrite(lateral_esquerda_trigger,LOW);
     digitalWrite(lateral_direita_trigger,LOW);
