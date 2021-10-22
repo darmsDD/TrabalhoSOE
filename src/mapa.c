@@ -24,19 +24,19 @@ void imprime_mapa(){
         }
         fprintf(arquivo_mapa,"\n");
     }
+    keep_threading = 0;
     fclose(arquivo_mapa);
-    exit(0);
 }
 
 void preenche_mapa_obstaculo(int l,int c,int vertical,int sensor){
    
     if(vertical){
-        printf("%d =  %d - %d    vertical = %d\n",l,pos[0], sensor,vertical);
+        //printf("%d =  %d - %d    vertical = %d\n",l,pos[0], sensor,vertical);
         for(int j=0;j<4;j++){
             mapa[l][c+j] = '1';
         }
     } else{
-        printf("%d =  %d - %d     vertical = %d\n",c,pos[1], sensor,vertical);
+        //printf("%d =  %d - %d     vertical = %d\n",c,pos[1], sensor,vertical);
         for(int j=0;j<4;j++){
             mapa[l+j][c] = '1';
         }
@@ -84,9 +84,10 @@ void * obstaculos(void * args){
     
     int direc;
     
-    while(1){
+    while(keep_threading){
         printf("sensor frontal = %lf\n",sensor_frontal->distancia);
         printf("sensor lateral esquerda = %lf\n",sensorlateral_esquerda->distancia);
+         printf("sensor lateral direita = %lf\n",sensorlateral_esquerda->distancia);
         if(sensor_frontal->distancia<1200){
             switch_obstaculos(direcao,round(sensor_frontal->distancia));
         } 
@@ -99,6 +100,7 @@ void * obstaculos(void * args){
             if(direc==0){direc=4;}
             switch_obstaculos(direc,round(sensorlateral_direita->distancia));
         }
+        delay(2000);
     }
     pthread_exit(0);
 
