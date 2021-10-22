@@ -7,8 +7,6 @@ extern pthread_mutex_t cadeado_mapa;
 
 void desligaSistema(){
     
-    para_carrinho();
-    imprime_mapa();
     keepThreading=0;
     pthread_join(sensor_frontal[0],NULL);
     pthread_join(sensor_lateral[0],NULL);
@@ -16,6 +14,8 @@ void desligaSistema(){
     pthread_join(sensor_frontal[1],NULL);
     pthread_join(t_mapa,NULL);
     pthread_join(t_obstaculos,NULL);
+    para_carrinho();
+    imprime_mapa();
     digitalWrite(frontal_esquerda_trigger,LOW);
     digitalWrite(lateral_esquerda_trigger,LOW);
     digitalWrite(lateral_direita_trigger,LOW);
@@ -52,7 +52,7 @@ int main()
     delay(2000);
     pthread_create(&t_obstaculos,NULL,&obstaculos,&estrutura_sensores);
     delay(1000);
-    pthread_create(&t_mapa,NULL,&desenha_mapa,NULL);
+    pthread_create(&t_mapa,NULL,&desenha_mapa,&estrutura_sensores[0]);
 
     while(1){
         printf("Digite\n1 para sentido horário\n2 para anti-horário\n3 para ponto morto\n4 para freio\n");
