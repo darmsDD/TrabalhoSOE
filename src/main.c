@@ -12,16 +12,17 @@ void desligaSistema(){
     pthread_join(t_mapa,NULL);
     pthread_join(t_obstaculos,NULL);
     imprime_mapa();
-    
+   
     pthread_join(sensor_frontal[0],NULL);
     pthread_join(sensor_lateral[0],NULL);
     pthread_join(sensor_lateral[1],NULL);
     pthread_join(sensor_frontal[1],NULL);
-   
+    pthread_join(sensor_traseiro,NULL);
+    pthread_mutex_destroy(&cadeado);
     digitalWrite(frontal_esquerda_trigger,LOW);
     digitalWrite(lateral_esquerda_trigger,LOW);
     digitalWrite(lateral_direita_trigger,LOW);
-    pthread_mutex_destroy(&cadeado);
+   
     exit(0);
 }
 

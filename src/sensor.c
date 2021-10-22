@@ -147,6 +147,7 @@ void * sensor(void * args){
         distancia_valida(desvio_padrao,cont,media,id,estrutura_sensor);
         
     }
+    pthread_mutex_unlock(&cadeado);
 
     pthread_exit(0);
 }
