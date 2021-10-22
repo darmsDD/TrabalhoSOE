@@ -16,6 +16,26 @@ int gira_carrinho(double lateral_esquerda, double lateral_direita){
 
 }
 
+int objeto_na_frente(int opcao, double sensor_esquerdo,double sensor_direito){
+    para_carrinho();
+    delay(2000);
+    int lado = gira_carrinho(sensor_esquerdo,sensor_direito);
+    if(opcao==1){
+        delay(1950);
+    } else {
+        delay(800);
+    }
+    para_depois_anda();
+    return lado;
+}
+
+void para_depois_anda(){
+    para_carrinho();
+    delay(1000);
+    anda_pra_frente();
+    delay(1000);
+}
+
 
 void para_carrinho(){
     digitalWrite(RODA_ESQUERDA_1,HIGH);

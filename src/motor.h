@@ -16,6 +16,8 @@
 
 
 int gira_carrinho(double lateral_esquerda, double lateral_direita);
+int objeto_na_frente(int opcao, double sensor_esquerdo,double sensor_direito);
+void para_depois_anda();
 void para_carrinho();
 void anda_pra_frente();
 void anda_pra_tras();
@@ -23,5 +25,6 @@ void gira_pra_esquerda();
 void gira_pra_direita();
 void ponto_morto();
 void inicia_motor();
+
 
 #endif

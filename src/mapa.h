@@ -16,6 +16,7 @@
 void * desenha_mapa();
 void * obstaculos(void * args);
 void * desenha_mapa();
+void imprime_mapa();
 
 
 
