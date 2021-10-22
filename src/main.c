@@ -1,6 +1,7 @@
 #include "main.h"
+extern pthread_mutex_t cadeado;
 
-void desligaSistema(int signal){
+void desligaSistema(){
     
     para_carrinho();
     keepThreading=0;
@@ -10,6 +11,7 @@ void desligaSistema(int signal){
     digitalWrite(frontal_esquerda_trigger,LOW);
     digitalWrite(lateral_esquerda_trigger,LOW);
     digitalWrite(lateral_direita_trigger,LOW);
+    pthread_mutex_destroy(&cadeado);
     exit(0);
 }
 
@@ -22,16 +24,18 @@ int main()
 	wiringPiSetup();
     
     
-    int id[]={frontal_esquerda,lateral_esquerdo,lateral_direito};
-    for(int i=0;i<3;i++){
+    int id[]={frontal_esquerda,frontal_direita,lateral_esquerdo,lateral_direito,traseiro};
+    for(int i=0;i<5;i++){
         estrutura_sensores[i].id_sensor = id[i];
         estrutura_sensores[i].continuaThread = &keepThreading ;
         estrutura_sensores[i].num = i;
     }
 
     pthread_create(&sensor_frontal[0],NULL,&sensor,&estrutura_sensores[0]);
-    pthread_create(&sensor_lateral[0],NULL,&sensor,&estrutura_sensores[1]);
-    pthread_create(&sensor_lateral[1],NULL,&sensor,&estrutura_sensores[2]);
+    pthread_create(&sensor_frontal[1],NULL,&sensor,&estrutura_sensores[1]);
+    pthread_create(&sensor_lateral[0],NULL,&sensor,&estrutura_sensores[2]);
+    pthread_create(&sensor_lateral[1],NULL,&sensor,&estrutura_sensores[3]);
+    pthread_create(&sensor_traseiro,NULL,&sensor,&estrutura_sensores[4]);
 
     inicia_motor();
 
@@ -42,7 +46,6 @@ int main()
         printf("5 para girar para direita\n6 para gira para esquerda\n\n");
         char opcao;
         scanf(" %c",&opcao);
-        int velocidade;
         switch (opcao)
         {
         case  '1'/* horário */:

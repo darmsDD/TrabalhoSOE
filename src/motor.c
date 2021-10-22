@@ -1,14 +1,18 @@
 #include "motor.h"
 
-void gira_carrinho(double lateral_esquerda, double lateral_direita){
-    
+int gira_carrinho(double lateral_esquerda, double lateral_direita){
+    int retorna = 0;
     if(lateral_esquerda>10){
         gira_pra_esquerda();
+        retorna = 1;
     } else if(lateral_direita>10){
         gira_pra_direita();
+        retorna = 0;
     } else{
         para_carrinho();
     }
+    return retorna;
+
 
 }
 
