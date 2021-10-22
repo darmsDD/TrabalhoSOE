@@ -33,6 +33,7 @@ void distancia_valida(double desvio_padrao,int cont,double media,int id,struct s
         if(media<=10 && (estrutura_sensor->id_sensor==frontal_esquerda || estrutura_sensor->id_sensor==frontal_direita)){
             printf("frente\n");
             pthread_mutex_lock(&cadeado);
+            printf("frente2\n");
             
             if(movimento_realizado==1) {
                 movimento_realizado=0;
@@ -40,6 +41,7 @@ void distancia_valida(double desvio_padrao,int cont,double media,int id,struct s
             }    
             printf("%d\n", estrutura_sensor->id_sensor);
             int lado = objeto_na_frente(1,estrutura_sensores[3].distancia,estrutura_sensores[2].distancia);
+            printf("frente3\n");
             if(lado!=-1){
                 movimentacao = (lado==esquerda)?1:2;
             }
