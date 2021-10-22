@@ -100,7 +100,7 @@ void * obstaculos(void * args){
             if(direc==0){direc=4;}
             switch_obstaculos(direc,round(sensorlateral_direita->distancia));
         }
-        delay(2000);
+        delay(10);
     }
     pthread_exit(0);
 
