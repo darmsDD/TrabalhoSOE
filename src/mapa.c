@@ -81,15 +81,15 @@ void * obstaculos(void * args){
 
     struct sensores * sensores_mapa = (struct sensores *)args;
     struct sensores * sensor_frontal = sensores_mapa;
-    struct sensores * sensorlateral_esquerda = sensores_mapa + 1;
-    struct sensores * sensorlateral_direita = sensores_mapa + 2;
+    struct sensores * sensorlateral_esquerda = sensores_mapa + 2;
+    struct sensores * sensorlateral_direita = sensores_mapa + 3;
     
     int direc;
     
     while(*(sensores_mapa->continuaThread)){
-        // printf("sensor frontal = %lf\n",sensor_frontal->distancia);
-        // printf("sensor lateral esquerda = %lf\n",sensorlateral_esquerda->distancia);
-        // printf("sensor lateral direita = %lf\n",sensorlateral_esquerda->distancia);
+        //printf("sensor frontal = %lf\n",sensor_frontal->distancia);
+        //printf("sensor lateral esquerda = %lf\n",sensorlateral_esquerda->distancia);
+        //printf("sensor lateral direita = %lf\n",sensorlateral_esquerda->distancia);
         if(sensor_frontal->distancia<1200){
             switch_obstaculos(direcao,round(sensor_frontal->distancia));
         } 
