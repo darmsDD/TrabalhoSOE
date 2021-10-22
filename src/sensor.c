@@ -15,6 +15,7 @@ int echo[] = {
     lateral_esquerda_echo,
     lateral_direita_echo
 };
+int movimento_realizado=0;
 
 char nome_sensores [][20] = 
     {"frontal_esquerda","frontal_direita",
@@ -22,9 +23,10 @@ char nome_sensores [][20] =
 
 int objeto_na_frente(int opcao){
     para_carrinho();
+    delay(2000);
     int lado = gira_carrinho(estrutura_sensores[3].distancia,estrutura_sensores[2].distancia);
     if(opcao==1){
-        delay(1850);
+        delay(1950);
     } else {
         delay(800);
     }
@@ -48,7 +50,13 @@ void distancia_valida(double desvio_padrao,int cont,double media,int id,struct s
         //delay(2000);
         if(media<=10 && (estrutura_sensor->id_sensor==frontal_esquerda || estrutura_sensor->id_sensor==frontal_direita)){
             pthread_mutex_lock(&cadeado);
+            if(movimento_realizado==1) {
+                movimento_realizado=0;
+                return;
+            }    
+            printf("%d\n", estrutura_sensor->id_sensor);
             objeto_na_frente(1);
+            movimento_realizado=1;
             pthread_mutex_unlock(&cadeado);
         } else if(media<=5 && (estrutura_sensor->id_sensor==lateral_esquerdo || estrutura_sensor->id_sensor==lateral_direito)){
             pthread_mutex_lock(&cadeado);
@@ -58,7 +66,7 @@ void distancia_valida(double desvio_padrao,int cont,double media,int id,struct s
             } else if(lado == direita){
                 gira_pra_esquerda();
             }
-            delay(800);
+            delay(600);
             para_depois_anda();
             pthread_mutex_unlock(&cadeado);
         }
