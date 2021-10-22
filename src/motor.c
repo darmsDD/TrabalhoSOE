@@ -9,6 +9,7 @@ int gira_carrinho(double lateral_esquerda, double lateral_direita){
         gira_pra_direita();
         retorna = 0;
     } else{
+        retorna = -1;
         para_carrinho();
     }
     return retorna;
@@ -27,7 +28,8 @@ int objeto_na_frente(int opcao, double sensor_esquerdo,double sensor_direito){
     } else {
         delay(800);
     }
-    para_depois_anda();
+    
+    if(lado!=-1){para_depois_anda();}
     printf("etapa3\n");
     return lado;
 }
