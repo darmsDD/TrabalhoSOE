@@ -38,7 +38,7 @@ void para_depois_anda(){
     para_carrinho();
     delay(1000);
     anda_pra_frente();
-    delay(1000);
+    //delay(1000);
 }
 
 
