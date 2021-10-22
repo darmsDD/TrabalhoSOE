@@ -87,9 +87,9 @@ void * obstaculos(void * args){
     int direc;
     
     while(*(sensores_mapa->continuaThread)){
-        printf("sensor frontal = %lf\n",sensor_frontal->distancia);
-        printf("sensor lateral esquerda = %lf\n",sensorlateral_esquerda->distancia);
-        printf("sensor lateral direita = %lf\n",sensorlateral_esquerda->distancia);
+        // printf("sensor frontal = %lf\n",sensor_frontal->distancia);
+        // printf("sensor lateral esquerda = %lf\n",sensorlateral_esquerda->distancia);
+        // printf("sensor lateral direita = %lf\n",sensorlateral_esquerda->distancia);
         if(sensor_frontal->distancia<1200){
             switch_obstaculos(direcao,round(sensor_frontal->distancia));
         } 
