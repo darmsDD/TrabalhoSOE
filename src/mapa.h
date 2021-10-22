@@ -13,7 +13,7 @@
 #define tamanho_carrinho 14
 #define N 5000
 
-void * desenha_mapa();
+void * desenha_mapa(void * args);
 void * obstaculos(void * args);
 void * desenha_mapa();
 void imprime_mapa();

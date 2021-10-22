@@ -17,14 +17,16 @@ void * le_comando(){
     pthread_exit(0);
 }
 void imprime_mapa(){
-
+    //keep_threading = 0;
+    printf("passei aqui\n");
     for(int i=0;i<N;i++){
         for(int j=0;j<N;j++){
             fprintf(arquivo_mapa,"%c",mapa[i][j]);   
         }
         fprintf(arquivo_mapa,"\n");
     }
-    keep_threading = 0;
+   
+    printf("passei aqui2\n");
     fclose(arquivo_mapa);
 }
 
@@ -84,10 +86,10 @@ void * obstaculos(void * args){
     
     int direc;
     
-    while(keep_threading){
-        printf("sensor frontal = %lf\n",sensor_frontal->distancia);
-        printf("sensor lateral esquerda = %lf\n",sensorlateral_esquerda->distancia);
-         printf("sensor lateral direita = %lf\n",sensorlateral_esquerda->distancia);
+    while(*(sensores_mapa->continuaThread)){
+        // printf("sensor frontal = %lf\n",sensor_frontal->distancia);
+        // printf("sensor lateral esquerda = %lf\n",sensorlateral_esquerda->distancia);
+        // printf("sensor lateral direita = %lf\n",sensorlateral_esquerda->distancia);
         if(sensor_frontal->distancia<1200){
             switch_obstaculos(direcao,round(sensor_frontal->distancia));
         } 
@@ -160,12 +162,13 @@ void altera_direcao(){
 
 
 
-void * desenha_mapa(){
-   
+void * desenha_mapa(void * args){
+    
+    struct sensores * sensores_mapa = (struct sensores *)args;
     arquivo_mapa = fopen("mapa", "w");
     memset(mapa,' ',sizeof(mapa));
     int l,c,l2,c2;
-    while(keep_threading){
+    while(*(sensores_mapa->continuaThread)){
 
         if(movimentacao!=0){
             altera_direcao();
