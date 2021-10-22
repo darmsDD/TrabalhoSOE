@@ -97,13 +97,12 @@ void * obstaculos(void * args){
     struct sensores * sensor_frontal = sensores_mapa;
     struct sensores * sensorlateral_esquerda = sensores_mapa + 1;
     struct sensores * sensorlateral_direita = sensores_mapa + 2;
-
+    
     int direc;
-    for(int i=0;i<10;i++){
+    while(*(sensor_frontal->continuaThread)){
         printf("%lf\n",sensor_frontal->distancia);
         sleep(1);
     }
-    sleep(5);
     
     // while(1){
     //     printf("sensor frontal[%d] = %lf\n",i,sensorFrontal[i]);
