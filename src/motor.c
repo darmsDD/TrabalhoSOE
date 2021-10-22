@@ -23,7 +23,7 @@ int objeto_na_frente(int opcao, double sensor_esquerdo,double sensor_direito){
     int lado = gira_carrinho(sensor_esquerdo,sensor_direito);
     printf("etapa2\n");
     if(opcao==1){
-        delay(1950);
+        delay(1650);
     } else {
         delay(800);
     }
