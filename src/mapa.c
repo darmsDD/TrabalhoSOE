@@ -168,6 +168,7 @@ void * desenha_mapa(void * args){
     arquivo_mapa = fopen("mapa", "w");
     memset(mapa,' ',sizeof(mapa));
     int l,c,l2,c2;
+    delay(10000);
     while(*(sensores_mapa->continuaThread)){
 
         if(movimentacao!=0){

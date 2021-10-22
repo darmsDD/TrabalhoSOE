@@ -56,6 +56,11 @@ int main()
     pthread_create(&t_obstaculos,NULL,&obstaculos,&estrutura_sensores);
     delay(1000);
     pthread_create(&t_mapa,NULL,&desenha_mapa,&estrutura_sensores[0]);
+    for(int i=0;i<10;i++){
+        printf("%ds\n",i);
+        delay(1000);
+    }
+    anda_pra_frente();
 
     while(1){
         printf("Digite\n1 para sentido horário\n2 para anti-horário\n3 para ponto morto\n4 para freio\n");
