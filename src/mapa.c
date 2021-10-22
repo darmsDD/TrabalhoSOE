@@ -1,14 +1,5 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<pthread.h>
-#include<math.h>
-#include<unistd.h>
-#include<signal.h>
-#include<string.h>
+#include"mapa.h"
 
-
-#define tamanho_carrinho 14
-#define N 5000
 int pos[] = {N/2,N/2};
 int direcao = 3;
 char mapa[N][N];
@@ -16,23 +7,23 @@ int parado=1;
 FILE * arquivo_mapa;
 char objetos[] = {' ','^','<','v','>','1'};
 
-double sensorFrontal[] = {
-        1200,1200,1200,1200,1200,
-        30,28.7,25.2,26.2,24,23
-};
+// double sensorFrontal[] = {
+//         1200,1200,1200,1200,1200,
+//         30,28.7,25.2,26.2,24,23
+// };
 
-double sensorlateral_esquerda[] = {
-    1200,1200,1200,1200,1200,
-    30,30,30,30,30,30
-};
-double sensorlateral_direita[] = {
-    1200,1200,1200,1200,1200,
-    30,30,30,30,30,30
-};
-double sensorTraseiro[] = {
-    1200,1200,1200,1200,1200,
-    1200,1200,1200,1200,1200,1200,1200,1200
-};
+// double sensorlateral_esquerda[] = {
+//     1200,1200,1200,1200,1200,
+//     30,30,30,30,30,30
+// };
+// double sensorlateral_direita[] = {
+//     1200,1200,1200,1200,1200,
+//     30,30,30,30,30,30
+// };
+// double sensorTraseiro[] = {
+//     1200,1200,1200,1200,1200,
+//     1200,1200,1200,1200,1200,1200,1200,1200
+// };
 
 void * le_comando(){
     while(1){
@@ -100,28 +91,39 @@ void switch_obstaculos(int direc,int distancia_obstaculo){
 }
 
 
-void * obstaculos(){
+void * obstaculos(void * args){
+
+    struct sensores * sensores_mapa = (struct sensores *)args;
+    struct sensores * sensor_frontal = sensores_mapa;
+    struct sensores * sensorlateral_esquerda = sensores_mapa + 1;
+    struct sensores * sensorlateral_direita = sensores_mapa + 2;
 
     int direc;
-    for(int i=0;i<11;i++){
-        printf("sensor frontal[%d] = %lf\n",i,sensorFrontal[i]);
-        printf("sensor lateral esquerda[%d] = %lf\n",i,sensorlateral_esquerda[i]);
-        if(sensorFrontal[i]<1200){
-            switch_obstaculos(direcao,round(sensorFrontal[i]));
-        } 
-        if(sensorlateral_esquerda[i]<1200){
-            direc = direcao%4 +1;
-            switch_obstaculos(direc,round(sensorlateral_esquerda[i]));
-        }
-        if(sensorlateral_direita[i]<1200){
-            direc = direcao -1 ;
-            if(direc==0){direc=4;}
-            switch_obstaculos(direc,round(sensorlateral_esquerda[i]));
-        }
-
-        
+    for(int i=0;i<10;i++){
+        printf("%lf\n",sensor_frontal->distancia);
         sleep(1);
     }
+    sleep(5);
+    
+    // while(1){
+    //     printf("sensor frontal[%d] = %lf\n",i,sensorFrontal[i]);
+    //     printf("sensor lateral esquerda[%d] = %lf\n",i,sensorlateral_esquerda[i]);
+    //     if(sensorFrontal[i]<1200){
+    //         switch_obstaculos(direcao,round(sensorFrontal[i]));
+    //     } 
+    //     if(sensorlateral_esquerda[i]<1200){
+    //         direc = direcao%4 +1;
+    //         switch_obstaculos(direc,round(sensorlateral_esquerda[i]));
+    //     }
+    //     if(sensorlateral_direita[i]<1200){
+    //         direc = direcao -1 ;
+    //         if(direc==0){direc=4;}
+    //         switch_obstaculos(direc,round(sensorlateral_esquerda[i]));
+    //     }
+
+        
+    //     sleep(1);
+    // }
     pthread_exit(0);
 
 }
@@ -130,19 +132,16 @@ void * obstaculos(){
 
 
 
-int main(){
-
-    int vel = 5;
-    pthread_t t1,t2;
+void * desenha_mapa(){
    
-    signal(SIGINT,imprime_mapa);
+    //signal(SIGINT,imprime_mapa);
     arquivo_mapa = fopen("mapa", "w");
     memset(mapa,' ',sizeof(mapa));
-    pthread_create(&t1,NULL,&le_comando,NULL);
-    pthread_create(&t2,NULL,&obstaculos,NULL);
+    //pthread_create(&t1,NULL,&le_comando,NULL);
+    //pthread_create(&t2,NULL,&obstaculos,NULL);
     sleep(1);
     int l,c,l2,c2;
-    while(1){
+    for(int j=0;j<15;j++){
         
         l = pos[0];
         c = pos[1];
