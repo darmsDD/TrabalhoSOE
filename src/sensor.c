@@ -1,6 +1,7 @@
 #include "sensor.h"
-pthread_mutex_t cadeado = PTHREAD_MUTEX_INITIALIZER;
 
+
+pthread_mutex_t cadeado = PTHREAD_MUTEX_INITIALIZER;
 int trigger[] = {
     frontal_esquerda_trigger,
     frontal_direita_trigger,
@@ -15,31 +16,12 @@ int echo[] = {
     lateral_esquerda_echo,
     lateral_direita_echo
 };
-int movimento_realizado=0;
+int movimento_realizado=0,movimentacao=0;
 
 char nome_sensores [][20] = 
     {"frontal_esquerda","frontal_direita",
     "traseiro","lateral_esquerdo","lateral_direito"};
 
-int objeto_na_frente(int opcao){
-    para_carrinho();
-    delay(2000);
-    int lado = gira_carrinho(estrutura_sensores[3].distancia,estrutura_sensores[2].distancia);
-    if(opcao==1){
-        delay(1950);
-    } else {
-        delay(800);
-    }
-    para_depois_anda();
-    return lado;
-}
-
-void para_depois_anda(){
-    para_carrinho();
-    delay(1000);
-    anda_pra_frente();
-    delay(1000);
-}
 
 void distancia_valida(double desvio_padrao,int cont,double media,int id,struct sensores * estrutura_sensor)
 {
@@ -49,26 +31,44 @@ void distancia_valida(double desvio_padrao,int cont,double media,int id,struct s
         //printf("Distância do sensor %s = %lf,\n\n\n",nome_sensores[id],estrutura_sensores[cont].distancia);
         //delay(2000);
         if(media<=10 && (estrutura_sensor->id_sensor==frontal_esquerda || estrutura_sensor->id_sensor==frontal_direita)){
+            printf("frente\n");
             pthread_mutex_lock(&cadeado);
+            printf("frente2\n");
+            
             if(movimento_realizado==1) {
                 movimento_realizado=0;
                 return;
             }    
             printf("%d\n", estrutura_sensor->id_sensor);
-            objeto_na_frente(1);
+            int lado = objeto_na_frente(1,estrutura_sensores[3].distancia,estrutura_sensores[2].distancia);
+            printf("frente3\n");
+            if(lado!=-1){
+                movimentacao = (lado==esquerda)?1:2;
+            }
+            
             movimento_realizado=1;
             pthread_mutex_unlock(&cadeado);
+            
+        
         } else if(media<=5 && (estrutura_sensor->id_sensor==lateral_esquerdo || estrutura_sensor->id_sensor==lateral_direito)){
-            pthread_mutex_lock(&cadeado);
-            int lado = objeto_na_frente(0);
+            printf("lateral\n");
+            //pthread_mutex_lock(&cadeado);
+            int lado = objeto_na_frente(0,estrutura_sensores[3].distancia,estrutura_sensores[2].distancia);
             if(lado == esquerda){
                 gira_pra_direita();
+                movimentacao = 3;
             } else if(lado == direita){
                 gira_pra_esquerda();
+                movimentacao = 4;
+            }
+            else{
+                return;
             }
             delay(600);
             para_depois_anda();
-            pthread_mutex_unlock(&cadeado);
+            //pthread_mutex_unlock(&cadeado);
+            
+        
         }
            
     }
@@ -155,6 +155,7 @@ void * sensor(void * args){
         distancia_valida(desvio_padrao,cont,media,id,estrutura_sensor);
         
     }
+    pthread_mutex_unlock(&cadeado);
 
     pthread_exit(0);
 }

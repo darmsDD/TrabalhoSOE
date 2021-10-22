@@ -2,18 +2,43 @@
 
 int gira_carrinho(double lateral_esquerda, double lateral_direita){
     int retorna = 0;
-    if(lateral_esquerda>10){
+    if(lateral_esquerda>30){
         gira_pra_esquerda();
         retorna = 1;
-    } else if(lateral_direita>10){
+    } else if(lateral_direita>30){
         gira_pra_direita();
         retorna = 0;
     } else{
+        retorna = -1;
         para_carrinho();
     }
     return retorna;
 
 
+}
+
+int objeto_na_frente(int opcao, double sensor_esquerdo,double sensor_direito){
+    printf("etapa1\n");
+    para_carrinho();
+    delay(2000);
+    int lado = gira_carrinho(sensor_esquerdo,sensor_direito);
+    printf("etapa2\n");
+    if(opcao==1){
+        delay(1650);
+    } else {
+        delay(800);
+    }
+    
+    if(lado!=-1){para_depois_anda();}
+    printf("etapa3\n");
+    return lado;
+}
+
+void para_depois_anda(){
+    para_carrinho();
+    delay(1000);
+    anda_pra_frente();
+    //delay(1000);
 }
 
 

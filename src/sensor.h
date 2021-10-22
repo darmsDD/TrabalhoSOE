@@ -39,7 +39,6 @@ struct sensores {
 
 struct sensores estrutura_sensores[5];
 void * sensor(void * args);
-int objeto_na_frente(int opcao);
-void para_depois_anda();
+
 void distancia_valida(double desvio_padrao,int cont,double media,int id,struct sensores * estrutura_sensor);
 #endif

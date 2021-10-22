@@ -1,38 +1,13 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<pthread.h>
-#include<math.h>
-#include<unistd.h>
-#include<signal.h>
-#include<string.h>
+#include"mapa.h"
 
-
-#define tamanho_carrinho 14
-#define N 5000
 int pos[] = {N/2,N/2};
-int direcao = 3;
+int direcao = 1;
 char mapa[N][N];
 int parado=1;
 FILE * arquivo_mapa;
 char objetos[] = {' ','^','<','v','>','1'};
-
-double sensorFrontal[] = {
-        1200,1200,1200,1200,1200,
-        30,28.7,25.2,26.2,24,23
-};
-
-double sensorlateral_esquerda[] = {
-    1200,1200,1200,1200,1200,
-    30,30,30,30,30,30
-};
-double sensorlateral_direita[] = {
-    1200,1200,1200,1200,1200,
-    30,30,30,30,30,30
-};
-double sensorTraseiro[] = {
-    1200,1200,1200,1200,1200,
-    1200,1200,1200,1200,1200,1200,1200,1200
-};
+int keep_threading = 1;
+extern int movimentacao;
 
 void * le_comando(){
     while(1){
@@ -42,26 +17,28 @@ void * le_comando(){
     pthread_exit(0);
 }
 void imprime_mapa(){
-    int tipo;
+    //keep_threading = 0;
+    printf("passei aqui\n");
     for(int i=0;i<N;i++){
         for(int j=0;j<N;j++){
             fprintf(arquivo_mapa,"%c",mapa[i][j]);   
         }
         fprintf(arquivo_mapa,"\n");
     }
+   
+    printf("passei aqui2\n");
     fclose(arquivo_mapa);
-    exit(0);
 }
 
 void preenche_mapa_obstaculo(int l,int c,int vertical,int sensor){
    
     if(vertical){
-        printf("%d =  %d - %d    vertical = %d\n",l,pos[0], sensor,vertical);
+        //printf("%d =  %d - %d    vertical = %d\n",l,pos[0], sensor,vertical);
         for(int j=0;j<4;j++){
             mapa[l][c+j] = '1';
         }
     } else{
-        printf("%d =  %d - %d     vertical = %d\n",c,pos[1], sensor,vertical);
+        //printf("%d =  %d - %d     vertical = %d\n",c,pos[1], sensor,vertical);
         for(int j=0;j<4;j++){
             mapa[l+j][c] = '1';
         }
@@ -100,50 +77,104 @@ void switch_obstaculos(int direc,int distancia_obstaculo){
 }
 
 
-void * obstaculos(){
+void * obstaculos(void * args){
 
+    struct sensores * sensores_mapa = (struct sensores *)args;
+    struct sensores * sensor_frontal = sensores_mapa;
+    struct sensores * sensorlateral_esquerda = sensores_mapa + 2;
+    struct sensores * sensorlateral_direita = sensores_mapa + 3;
+    
     int direc;
-    for(int i=0;i<11;i++){
-        printf("sensor frontal[%d] = %lf\n",i,sensorFrontal[i]);
-        printf("sensor lateral esquerda[%d] = %lf\n",i,sensorlateral_esquerda[i]);
-        if(sensorFrontal[i]<1200){
-            switch_obstaculos(direcao,round(sensorFrontal[i]));
+    
+    while(*(sensores_mapa->continuaThread)){
+        //printf("sensor frontal = %lf\n",sensor_frontal->distancia);
+        //printf("sensor lateral esquerda = %lf\n",sensorlateral_esquerda->distancia);
+        //printf("sensor lateral direita = %lf\n",sensorlateral_esquerda->distancia);
+        if(sensor_frontal->distancia<1200){
+            switch_obstaculos(direcao,round(sensor_frontal->distancia));
         } 
-        if(sensorlateral_esquerda[i]<1200){
+        if(sensorlateral_esquerda->distancia<1200){
             direc = direcao%4 +1;
-            switch_obstaculos(direc,round(sensorlateral_esquerda[i]));
+            switch_obstaculos(direc,round(sensorlateral_esquerda->distancia));
         }
-        if(sensorlateral_direita[i]<1200){
+        if(sensorlateral_direita->distancia<1200){
             direc = direcao -1 ;
             if(direc==0){direc=4;}
-            switch_obstaculos(direc,round(sensorlateral_esquerda[i]));
+            switch_obstaculos(direc,round(sensorlateral_direita->distancia));
         }
-
-        
-        sleep(1);
+        delay(10);
     }
     pthread_exit(0);
 
 }
 
+void altera_posicao(int opcao){
+
+    if(opcao == 1){
+        if(direcao == 1){
+            pos[1]-=5;
+        } else if(direcao ==3){
+            pos[1]+=5;
+        } else if(direcao == 2){
+            pos[0]-=5;
+        } else if(direcao==4){
+            pos[0]+=5;
+        }
+    } else {
+        if(direcao == 1){
+            pos[1] +=5;
+        } else if(direcao ==3){
+            pos[1]-=5;
+        } else if(direcao == 2){
+            pos[0] +=5;
+        } else if(direcao==4){
+            pos[0] -=5;
+        }
+    }
 
 
 
+}
 
-int main(){
 
-    int vel = 5;
-    pthread_t t1,t2;
-   
-    signal(SIGINT,imprime_mapa);
+void altera_direcao(){
+
+    switch (movimentacao)
+    {
+    case 1/* constant-expression */:
+        direcao = direcao%4 +1;
+        break;
+    case 2/* constant-expression */:
+        direcao = direcao - 1 ;
+        if(direcao==0){direcao=4;}
+        break;
+    case 3/* constant-expression */:
+        altera_posicao(1);
+        break;
+    case 4/* constant-expression */:
+        altera_posicao(2);
+        break;
+    default:
+        break;
+    }
+
+}
+
+
+
+void * desenha_mapa(void * args){
+    
+    struct sensores * sensores_mapa = (struct sensores *)args;
     arquivo_mapa = fopen("mapa", "w");
     memset(mapa,' ',sizeof(mapa));
-    pthread_create(&t1,NULL,&le_comando,NULL);
-    pthread_create(&t2,NULL,&obstaculos,NULL);
-    sleep(1);
     int l,c,l2,c2;
-    while(1){
-        
+    delay(10000);
+    while(*(sensores_mapa->continuaThread)){
+
+        if(movimentacao!=0){
+            altera_direcao();
+            movimentacao = 0;
+        }
         l = pos[0];
         c = pos[1];
         
@@ -167,7 +198,7 @@ int main(){
             mapa[l+l2][c+c2] = objetos[direcao];
             (direcao == 1 || direcao ==3)?c2--:l2--;
         }
-        sleep(1);
+        delay(606);
     }
 
     
