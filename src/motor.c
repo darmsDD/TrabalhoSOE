@@ -2,10 +2,10 @@
 
 int gira_carrinho(double lateral_esquerda, double lateral_direita){
     int retorna = 0;
-    if(lateral_esquerda>10){
+    if(lateral_esquerda>30){
         gira_pra_esquerda();
         retorna = 1;
-    } else if(lateral_direita>10){
+    } else if(lateral_direita>30){
         gira_pra_direita();
         retorna = 0;
     } else{
