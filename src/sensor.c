@@ -69,6 +69,8 @@ void distancia_valida(double desvio_padrao,int cont,double media,int id,struct s
             //pthread_mutex_unlock(&cadeado);
             
         
+
+        
         }
            
     }
