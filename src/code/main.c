@@ -11,7 +11,7 @@ void desligaSistema(){
     para_carrinho();
     pthread_join(t_mapa,NULL);
     pthread_join(t_obstaculos,NULL);
-    imprime_mapa();
+    
    
     pthread_join(sensor_frontal[0],NULL);
     pthread_join(sensor_lateral[0],NULL);
@@ -23,6 +23,9 @@ void desligaSistema(){
     digitalWrite(lateral_esquerda_trigger,LOW);
     digitalWrite(lateral_direita_trigger,LOW);
    
+
+    imprime_mapa();
+
     exit(0);
 }
 
