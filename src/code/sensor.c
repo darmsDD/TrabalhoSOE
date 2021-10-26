@@ -29,7 +29,7 @@ void distancia_valida(double desvio_padrao,int cont,double media,int id,struct s
         estrutura_sensores[cont].distancia = media;
         //if(id==1 || id==0)printf("Distância do sensor %s = %lf,\n\n\n",nome_sensores[id],estrutura_sensores[cont].distancia);
         //delay(2000);
-        if(media<=10 && (estrutura_sensor->id_sensor==frontal_esquerda || estrutura_sensor->id_sensor==frontal_direita)){
+        if(media<=5 && (estrutura_sensor->id_sensor==frontal_esquerda || estrutura_sensor->id_sensor==frontal_direita)){
             //printf("frente\n");
             pthread_mutex_lock(&cadeado);
             //printf("frente2\n");
@@ -39,7 +39,7 @@ void distancia_valida(double desvio_padrao,int cont,double media,int id,struct s
                 movimento_realizado=0;
                 return;
             }    
-            printf("%d\n", estrutura_sensor->id_sensor);
+            //printf("%d\n", estrutura_sensor->id_sensor);
             int lado = objeto_na_frente(1,estrutura_sensores[3].distancia,estrutura_sensores[2].distancia);
             //printf("frente3\n");
             if(lado!=-1){
