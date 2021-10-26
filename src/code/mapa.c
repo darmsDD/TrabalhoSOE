@@ -4,7 +4,7 @@ int pos[] = {N/2,N/2};
 int direcao = 1;
 char mapa[N][N];
 int parado=1;
-FILE * arquivo_mapa;
+
 char objetos[] = {' ','^','<','v','>','1'};
 extern int movimentacao;
 
@@ -17,6 +17,8 @@ void * le_comando(){
 }
 void imprime_mapa(){
     //keep_threading = 0;
+    FILE * arquivo_mapa;
+    arquivo_mapa = fopen("mapa", "w");
     printf("passei aqui\n");
     for(int i=0;i<N;i++){
         for(int j=0;j<N;j++){
@@ -178,7 +180,7 @@ void altera_direcao(){
 void * desenha_mapa(void * args){
     
     int * continuaThread = (int *)args;
-    arquivo_mapa = fopen("mapa", "w");
+    
     memset(mapa,' ',sizeof(mapa));
     int l,c,l2,c2;
     while(*(continuaThread)){

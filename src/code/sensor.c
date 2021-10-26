@@ -97,8 +97,8 @@ void * sensor(void * args){
     while(*(estrutura_sensor->continuaThread)){
         double elem[20],media=0.0;
         char leitura_invalida=0;
-        short int quantidade = 10;
-        for(short int i=0,j=0;i<10;i++){
+        short int quantidade = 5;
+        for(short int i=0,j=0;i<5;i++){
             digitalWrite(trigger1,HIGH);
             delayMicroseconds(10);
             digitalWrite(trigger1,LOW);
