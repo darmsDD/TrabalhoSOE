@@ -22,7 +22,7 @@ int objeto_na_frente(int opcao, double sensor_esquerdo,double sensor_direito){
     para_carrinho();
     delay(2000);
     int lado = gira_carrinho(sensor_esquerdo,sensor_direito);
-    /qprintf("etapa2\n");
+    //printf("etapa2\n");
     if(opcao==1){
         delay(1650);
     } else {
