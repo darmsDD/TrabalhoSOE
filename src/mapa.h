@@ -11,7 +11,7 @@
 #include"sensor.h"
 
 #define tamanho_carrinho 14
-#define N 5000
+#define N 1000
 
 void * desenha_mapa(void * args);
 void * obstaculos(void * args);

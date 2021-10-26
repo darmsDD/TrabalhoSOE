@@ -91,18 +91,19 @@ void * obstaculos(void * args){
         //printf("sensor lateral esquerda = %lf\n",sensorlateral_esquerda->distancia);
         //printf("sensor lateral direita = %lf\n",sensorlateral_esquerda->distancia);
         if(sensor_frontal->distancia<1200){
-            switch_obstaculos(direcao,round(sensor_frontal->distancia));
+            printf("total % = %d - %d\n", (int)round(sensor_frontal->distancia) - pos[0], (int)round(sensor_frontal->distancia), pos[0]);
+            switch_obstaculos(direcao,(int)round(sensor_frontal->distancia));
         } 
         if(sensorlateral_esquerda->distancia<1200){
             direc = direcao%4 +1;
-            switch_obstaculos(direc,round(sensorlateral_esquerda->distancia));
+            switch_obstaculos(direc,(int)round(sensorlateral_esquerda->distancia));
         }
         if(sensorlateral_direita->distancia<1200){
             direc = direcao -1 ;
             if(direc==0){direc=4;}
-            switch_obstaculos(direc,round(sensorlateral_direita->distancia));
+            switch_obstaculos(direc,(int)round(sensorlateral_direita->distancia));
         }
-        delay(10);
+        delayMicroseconds(150);
     }
     pthread_exit(0);
 
@@ -168,7 +169,6 @@ void * desenha_mapa(void * args){
     arquivo_mapa = fopen("mapa", "w");
     memset(mapa,' ',sizeof(mapa));
     int l,c,l2,c2;
-    delay(10000);
     while(*(sensores_mapa->continuaThread)){
 
         if(movimentacao!=0){
