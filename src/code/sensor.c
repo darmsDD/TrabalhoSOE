@@ -35,6 +35,7 @@ void distancia_valida(double desvio_padrao,int cont,double media,int id,struct s
             //printf("frente2\n");
             
             if(movimento_realizado==1) {
+                pthread_mutex_unlock(&cadeado);
                 movimento_realizado=0;
                 return;
             }    
