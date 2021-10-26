@@ -95,11 +95,11 @@ void * obstaculos(void * args){
         //printf("sensor lateral esquerda = %lf\n",sensorlateral_esquerda->distancia);
         //printf("sensor lateral direita = %lf\n",sensorlateral_esquerda->distancia);
         if(sensor_frontal_esquerda->distancia<1200){
-            //printf("total %d = %d - %d\n", (int)round(sensor_frontal_esquerda->distancia) - pos[0], (int)round(sensor_frontal_esquerda->distancia), pos[0]);
+            printf("total %d = %d - %d\n", (int)round(sensor_frontal_esquerda->distancia) - pos[0], (int)round(sensor_frontal_esquerda->distancia), pos[0]);
             switch_obstaculos(direcao,(int)round(sensor_frontal_esquerda->distancia),3);
         } 
         if(sensor_frontal_direita->distancia<1200){
-            //printf("total %d = %d - %d\n", (int)round(sensor_frontal_direita->distancia) - pos[0], (int)round(sensor_frontal_direita->distancia), pos[0]);
+            printf("total %d = %d - %d\n", (int)round(sensor_frontal_direita->distancia) - pos[0], (int)round(sensor_frontal_direita->distancia), pos[0]);
             switch_obstaculos(direcao,(int)round(sensor_frontal_direita->distancia),-1);
         } 
 
