@@ -57,7 +57,7 @@ int main()
 
     delay(2000);
    
-    for(int i=0;i<10;i++){
+    for(int i=5;i>0;i--){
         printf("%ds\n",i);
         delay(1000);
     }
