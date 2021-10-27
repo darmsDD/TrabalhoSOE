@@ -10,7 +10,8 @@
 #include<string.h>
 #include"sensor.h"
 
-#define tamanho_carrinho 14
+#define largura_carrinho 27
+#define comprimento_carrinho 26
 #define N 1000
 
 void * desenha_mapa(void * args);

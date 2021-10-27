@@ -115,7 +115,8 @@ void * obstaculos(void * args){
         }
         if(sensor_traseiro->distancia<dist_maxima){
             direc  = (direcao+2)%4;
-            switch_obstaculos(direc,(int)round(sensor_traseiro->distancia),1);
+
+            switch_obstaculos(direc,(int)round(sensor_traseiro->distancia)+comprimento_carrinho,1);
         }
 
         delayMicroseconds(10000);
@@ -150,18 +151,16 @@ void altera_posicao(int opcao){
          switch (direcao)
         {
         case 1:
-        printf("11\n");
-            pos[0]+=tamanho_carrinho;
+            pos[0]+=largura_carrinho;
             break;
         case 2:
-            pos[1]+=tamanho_carrinho;
+            pos[1]+=largura_carrinho;
             break;
         case 3:
-            pos[0]-=tamanho_carrinho;
+            pos[0]-=largura_carrinho;
             break;
         case 4:
-            printf("22\n");
-            pos[1]-=tamanho_carrinho;
+            pos[1]-=largura_carrinho;
             break;
         default:
             break;
@@ -177,10 +176,8 @@ void altera_direcao(){
     switch (movimentacao)
     {
     case 1:
-        printf("aqui\n");
         altera_posicao(3);
         direcao = direcao%4 +1;
-        printf("direcao = %d\n",direcao);
         break;
     
     case 2:
@@ -207,7 +204,7 @@ void * desenha_mapa(void * args){
     int * continuaThread = (int *)args;
     
     memset(mapa,' ',sizeof(mapa));
-    int l,c,l2,c2,j=0;
+    int l,c,l2,c2;
     while(*(continuaThread)){
 
         if(movimentacao!=0){
@@ -228,12 +225,12 @@ void * desenha_mapa(void * args){
         }
         
         l2=0,c2=0;
-        for(int i=0;i<tamanho_carrinho/2;i++){
+        for(int i=0;i<largura_carrinho/2;i++){
             mapa[l+l2][c+c2] = objetos[direcao];
             (direcao == 1 || direcao ==3)?c2++:l2++;
         }
         l2=0,c2=0;
-        for(int i=0;i<tamanho_carrinho/2;i++){
+        for(int i=0;i<largura_carrinho/2;i++){
             mapa[l+l2][c+c2] = objetos[direcao];
             (direcao == 1 || direcao ==3)?c2--:l2--;
         }
