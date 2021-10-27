@@ -244,7 +244,7 @@ void * desenha_mapa(void * args){
         //     printf("aaaaaaaaaa\n");
         //     movimentacao=1;
         // }
-        delay(606);
+        delay(25);
     }
 
     
