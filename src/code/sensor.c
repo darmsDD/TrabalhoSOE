@@ -144,7 +144,7 @@ void * sensor(void * args){
             media+= distance;
             j++;
         }
-        //if(quantidade==0)continue;
+        if(quantidade==0)continue;
 
         media/=quantidade;
 
