@@ -143,12 +143,11 @@ void * sensor(void * args){
             elem[j]=distance;
             media+= distance;
             j++;
-            delayMicroseconds(10);
+            delayMicroseconds(200);
         }
         if(quantidade==0)continue;
 
         media/=quantidade;
-        if(media<2){continue;}
        
         double desvio_padrao =0.0;
         for(short int i=0;i<quantidade;i++){

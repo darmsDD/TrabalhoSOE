@@ -213,7 +213,9 @@ void * desenha_mapa(void * args){
     while(*(continuaThread)){
 
         if(movimentacao!=0){
+            printf("porque jesus\n");
             altera_direcao();
+            
             movimentacao = 0;
         }
         l = pos[0];
