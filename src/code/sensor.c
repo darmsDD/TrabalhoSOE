@@ -143,6 +143,7 @@ void * sensor(void * args){
             elem[j]=distance;
             media+= distance;
             j++;
+            delayMicroseconds(100);
         }
         if(quantidade==0)continue;
 
