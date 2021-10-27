@@ -108,32 +108,32 @@ void * sensor(void * args){
             
             while (digitalRead(echo1)==0){
                 inicio_pulso = micros();
-                // if((inicio_pulso - inicia_programa) > 50000){
-                //     leitura_invalida = 1;
-                //     break;
-                // } 
+                if((inicio_pulso - inicia_programa) > 5830){
+                    leitura_invalida = 1;
+                    break;
+                } 
                
             }
            
-            // if(leitura_invalida){
-            //     quantidade--;
-            //     leitura_invalida=0;
-            //     continue;
-            // }
+            if(leitura_invalida){
+                quantidade--;
+                leitura_invalida=0;
+                continue;
+            }
             
             while(digitalRead(echo1)==1){
                 fim_pulso=micros();
-                // if((fim_pulso - inicio_pulso) > 50000){
-                //     leitura_invalida = 1;
-                //     break;
-                // } 
+                if((fim_pulso - inicio_pulso) > 5830){
+                    leitura_invalida = 1;
+                    break;
+                } 
             }
             
-            // if(leitura_invalida){
-            //     quantidade--;
-            //     leitura_invalida=0;
-            //     continue;
-            // }
+            if(leitura_invalida){
+                quantidade--;
+                leitura_invalida=0;
+                continue;
+            }
             duracao_pulso = fim_pulso - inicio_pulso;
            
             
