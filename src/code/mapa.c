@@ -148,19 +148,24 @@ void altera_posicao(int opcao){
             pos[0] -=5;
         }
     } else{
+        int dist_giro=10;
          switch (direcao)
         {
         case 1:
-            pos[0]+=largura_carrinho;
+            printf("giro 1\n");
+            pos[0]+=dist_giro;
             break;
         case 2:
-            pos[1]+=largura_carrinho;
+            printf("giro 2\n");
+            pos[1]+=dist_giro;
             break;
         case 3:
-            pos[0]-=largura_carrinho;
+            printf("giro 3\n");
+            pos[0]-=dist_giro;
             break;
         case 4:
-            pos[1]-=largura_carrinho;
+            printf("giro 4\n");
+            pos[1]-=dist_giro;
             break;
         default:
             break;
