@@ -56,7 +56,7 @@ int main()
     inicia_motor();
 
     delay(2000);
-    anda_pra_frente();
+    //anda_pra_frente();
     for(int i=100;i>0;i--){
         printf("%ds\n",i);
         delay(1000);

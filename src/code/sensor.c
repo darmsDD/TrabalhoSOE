@@ -25,6 +25,7 @@ char nome_sensores [][20] =
 void distancia_valida(double desvio_padrao,int cont,double media,int id,struct sensores * estrutura_sensor)
 {
     int esquerda = 1,direita=0;
+    //printf("%lf %lf\n\n",desvio_padrao,media)
     if(sqrt(desvio_padrao)<=1){
         estrutura_sensores[cont].distancia = media;
         if(id==0)printf("Distância do sensor %s = %lf,\n\n\n",nome_sensores[id],estrutura_sensores[cont].distancia);
