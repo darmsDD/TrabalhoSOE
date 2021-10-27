@@ -109,7 +109,7 @@ void * sensor(void * args){
             
             while (digitalRead(echo1)==0){
                 inicio_pulso = micros();
-                if((inicio_pulso - inicia_programa) > 5830){
+                if((inicio_pulso - inicia_programa) > 10000){
                     leitura_invalida = 1;
                     break;
                 } 
@@ -124,7 +124,7 @@ void * sensor(void * args){
             
             while(digitalRead(echo1)==1){
                 fim_pulso=micros();
-                if((fim_pulso - inicio_pulso) > 5830){
+                if((fim_pulso - inicio_pulso) > 10000){
                     leitura_invalida = 1;
                     break;
                 } 
