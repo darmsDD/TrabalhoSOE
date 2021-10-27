@@ -25,7 +25,7 @@ char nome_sensores [][20] =
 void distancia_valida(double desvio_padrao,int cont,double media,int id,struct sensores * estrutura_sensor)
 {
     int esquerda = 1,direita=0;
-    if(sqrt(desvio_padrao<=2)){
+    if(sqrt(desvio_padrao)<=1){
         estrutura_sensores[cont].distancia = media;
         //if(id==1 || id==0)printf("Distância do sensor %s = %lf,\n\n\n",nome_sensores[id],estrutura_sensores[cont].distancia);
         //delay(2000);
@@ -97,8 +97,8 @@ void * sensor(void * args){
     while(*(estrutura_sensor->continuaThread)){
         double elem[20],media=0.0;
         char leitura_invalida=0;
-        short int quantidade = 7;
-        for(short int i=0,j=0;i<7;i++){
+        short int quantidade = 10;
+        for(short int i=0,j=0;i<10;i++){
             digitalWrite(trigger1,HIGH);
             delayMicroseconds(10);
             digitalWrite(trigger1,LOW);
