@@ -132,7 +132,7 @@ void * sensor(void * args){
             elem[j]=distance;
             media+= distance;
             j++;
-            delayMicroseconds(200);
+            delayMicroseconds(100);
         }
         if(quantidade==0)continue;
 
@@ -156,6 +156,7 @@ void * sensor(void * args){
         //printf("%d duracao total = %d(microsegundos), %d\n",k,finish-init,tempo);
         k++;
     }
+
     k--;
     double tempo2 = tempo/(k*1.0);
     
@@ -164,9 +165,10 @@ void * sensor(void * args){
     char arquivo[60] = "planilhaSensores/";
     strncat(arquivo,nome_sensores[id],20);
     teste_sensor = fopen(arquivo,"a");
-    
-    fprintf(teste_sensor,"%s, %d, %lf, %lf%%\n",nome_sensores[id],k,tempo2,(quantidadeCerto*100.0)/(quantidadeCerto+quantidadeErrada));
+    double quantidadeSegundo = tempo2*40*1e-6;
+    fprintf(teste_sensor,"%s, %lf(s),%d, %lf, %lf%%\n",nome_sensores[id],quantidadeSegundo,k,tempo2,(quantidadeCerto*100.0)/(quantidadeCerto+quantidadeErrada));
     fclose(teste_sensor);
+    
     pthread_exit(0);
 }
 
@@ -185,7 +187,7 @@ void arquivo_existe(int id){
         return;
     }else{
         teste_sensor = fopen(arquivo,"a");
-        fprintf(teste_sensor,"Sensor, Leituras, Tempo Médio, Taxa de leituras corretas\n");
+        fprintf(teste_sensor,"Sensor, 40 leituras em (s),Leituras, Tempo Médio, Taxa de leituras corretas\n");
         fclose(teste_sensor);
     }
 
