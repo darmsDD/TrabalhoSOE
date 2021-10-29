@@ -49,7 +49,7 @@ void distancia_valida(int cont,double media,int id,struct sensores * estrutura_s
         movimento_realizado=1;
         pthread_mutex_unlock(&cadeado);
         
-    } else if(media<=5 && (estrutura_sensor->id_sensor==lateral_esquerdo || estrutura_sensor->id_sensor==lateral_direito)){
+    } /*else if(media<=5 && (estrutura_sensor->id_sensor==lateral_esquerdo || estrutura_sensor->id_sensor==lateral_direito)){
         //printf("lateral\n");
         //pthread_mutex_lock(&cadeado);
         int lado = objeto_na_frente(0,estrutura_sensores[3].distancia,estrutura_sensores[2].distancia);
@@ -66,7 +66,7 @@ void distancia_valida(int cont,double media,int id,struct sensores * estrutura_s
         delay(600);
         para_depois_anda();
         //pthread_mutex_unlock(&cadeado);
-    }
+    }*/
 }
 
 
@@ -166,7 +166,7 @@ void * sensor(void * args){
     char arquivo[60] = "planilhaSensores/";
     strncat(arquivo,nome_sensores[id],20);
     teste_sensor = fopen(arquivo,"a");
-    double quantidadeSegundo = tempo2*40*1e-6;
+    double quantidadeSegundo = tempo2*28*1e-6;
     fprintf(teste_sensor,"%s, %lf(s),%d, %lf, %lf%%\n",nome_sensores[id],quantidadeSegundo,k,tempo2,(quantidadeCerto*100.0)/(quantidadeCerto+quantidadeErrada));
     fclose(teste_sensor);
     
@@ -188,7 +188,7 @@ void arquivo_existe(int id){
         return;
     }else{
         teste_sensor = fopen(arquivo,"a");
-        fprintf(teste_sensor,"Sensor, 40 leituras em (s),Leituras, Tempo Médio, Taxa de leituras corretas\n");
+        fprintf(teste_sensor,"Sensor, 28 leituras em (s),Leituras, Tempo Médio, Taxa de leituras corretas\n");
         fclose(teste_sensor);
     }
 

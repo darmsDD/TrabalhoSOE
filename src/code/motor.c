@@ -24,7 +24,7 @@ int objeto_na_frente(int opcao, double sensor_esquerdo,double sensor_direito){
     int lado = gira_carrinho(sensor_esquerdo,sensor_direito);
     //printf("etapa2\n");
     if(opcao==1){
-        delay(2000);
+        delay(1250);
     } else {
         delay(800);
     }
@@ -52,6 +52,7 @@ void para_carrinho(){
 }
 
 void anda_pra_frente(){
+    //torque_inicial();
     digitalWrite(RODA_ESQUERDA_1,LOW);
     digitalWrite(RODA_ESQUERDA_2,HIGH);
     digitalWrite(RODA_DIREITA_1, LOW);
@@ -61,6 +62,7 @@ void anda_pra_frente(){
 }
 
 void anda_pra_tras(){
+    //torque_inicial();
     digitalWrite(RODA_DIREITA_1, HIGH);
     digitalWrite(RODA_DIREITA_2, LOW);
     digitalWrite(RODA_ESQUERDA_1, HIGH);
@@ -101,6 +103,21 @@ void torque_inicial(){
     digitalWrite(RODA_DIREITA_2, HIGH);
     softPwmWrite(PWM_RODA_DIREITA,80);
     softPwmWrite(PWM_RODA_ESQUERDA,100);
+    delay(500);
+    digitalWrite(RODA_ESQUERDA_1,LOW);
+    digitalWrite(RODA_ESQUERDA_2,HIGH);
+    digitalWrite(RODA_DIREITA_1, LOW);
+    digitalWrite(RODA_DIREITA_2, HIGH);
+    softPwmWrite(PWM_RODA_DIREITA,60);
+    softPwmWrite(PWM_RODA_ESQUERDA,80);
+    delay(500);
+    /*digitalWrite(RODA_ESQUERDA_1,LOW);
+    digitalWrite(RODA_ESQUERDA_2,HIGH);
+    digitalWrite(RODA_DIREITA_1, LOW);
+    digitalWrite(RODA_DIREITA_2, HIGH);
+    softPwmWrite(PWM_RODA_DIREITA,50);
+    softPwmWrite(PWM_RODA_ESQUERDA,60);
+    delay(500);*/
 }
 
 
@@ -112,9 +129,4 @@ void inicia_motor(){
     pinMode(RODA_DIREITA_2,OUTPUT);
     softPwmCreate(PWM_RODA_ESQUERDA,0,100);
     softPwmCreate(PWM_RODA_DIREITA,0,100);
-
-    torque_inicial();
-    delay(20);
-    ponto_morto();
-
 }

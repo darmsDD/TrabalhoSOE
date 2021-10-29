@@ -55,22 +55,23 @@ int main()
     // pthread_create(&sensor_lateral[1],NULL,&sensor,&estrutura_sensores[3]);
     // pthread_create(&sensor_traseiro,NULL,&sensor,&estrutura_sensores[4]);
     
-   
-
-    
-
-    delay(2000);
-    for(int i=5;i>0;i--){
-        printf("%ds\n",i);
-        delay(1000);
-    }
-    
     cria_thread_com_prioridade(&sensor_frontal[0],99,&sensor,&estrutura_sensores[0]);
     cria_thread_com_prioridade(&sensor_frontal[1],99,&sensor,&estrutura_sensores[1]);
     cria_thread_com_prioridade(&sensor_lateral[0],50,&sensor,&estrutura_sensores[2]);
     cria_thread_com_prioridade(&sensor_lateral[1],50,&sensor,&estrutura_sensores[3]);
     cria_thread_com_prioridade(&sensor_traseiro,50,&sensor,&estrutura_sensores[4]);
 
+    
+
+    //delay(2000);
+    for(int i=5;i>0;i--){
+        printf("%ds\n",i);
+        delay(1000);
+    }
+    
+    
+
+    //delay(2000);
     cria_thread_com_prioridade(&t_obstaculos,40,&obstaculos,&estrutura_sensores);
     cria_thread_com_prioridade(&t_mapa,40,&desenha_mapa,&keepThreading);
 
