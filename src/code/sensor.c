@@ -108,11 +108,11 @@ void * sensor(void * args){
                
             }
            
-            // if(leitura_invalida){
-            //     quantidade--;
-            //     leitura_invalida=0;
-            //     continue;
-            // }
+            if(leitura_invalida){
+                quantidade--;
+                leitura_invalida=0;
+                continue;
+            }
             
             while(digitalRead(echo1)==1){
                 fim_pulso=micros();
@@ -122,11 +122,11 @@ void * sensor(void * args){
                 } 
             }
             
-            // if(leitura_invalida){
-            //     quantidade--;
-            //     leitura_invalida=0;
-            //     continue;
-            // }
+            if(leitura_invalida){
+                quantidade--;
+                leitura_invalida=0;
+                continue;
+            }
             duracao_pulso = fim_pulso - inicio_pulso;
             double distance = (double)duracao_pulso* 0.017150;
             elem[j]=distance;
