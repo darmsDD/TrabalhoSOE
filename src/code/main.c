@@ -11,7 +11,7 @@ void desligaSistema(){
     para_carrinho();
     pthread_join(t_mapa,NULL);
     pthread_join(t_obstaculos,NULL);
-    
+    libera_lock();
    
     pthread_join(sensor_frontal[0],NULL);
     pthread_join(sensor_lateral[0],NULL);

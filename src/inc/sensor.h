@@ -7,8 +7,10 @@
 #include<pthread.h>
 #include<signal.h>
 #include<unistd.h>
+#include<string.h>
 #include <softPwm.h>
 #include "motor.h"
+
 
 #define frontal_esquerda_trigger 4
 #define frontal_esquerda_echo 5
@@ -43,6 +45,7 @@ struct sensores {
 
 struct sensores estrutura_sensores[5];
 void * sensor(void * args);
-
+void arquivo_existe(int id);
+void libera_lock();
 void distancia_valida(int cont,double media,int id,struct sensores * estrutura_sensor);
 #endif
