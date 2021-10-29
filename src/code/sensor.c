@@ -22,70 +22,60 @@ char nome_sensores [][20] =
     "traseiro","lateral_esquerdo","lateral_direito"};
 
 
-void distancia_valida(double desvio_padrao,int cont,double media,int id,struct sensores * estrutura_sensor)
+void distancia_valida(int cont,double media,int id,struct sensores * estrutura_sensor)
 {
     int esquerda = 1,direita=0;
-    //printf("%lf %lf\n\n",desvio_padrao,media)
-    if(sqrt(desvio_padrao)<=1){
-        estrutura_sensores[cont].distancia = media;
-        if(id==0)printf("Distância do sensor %s = %lf,\n\n\n",nome_sensores[id],estrutura_sensores[cont].distancia);
-        //delay(2000);
-        if(media<=10 && (estrutura_sensor->id_sensor==frontal_esquerda || estrutura_sensor->id_sensor==frontal_direita)){
-            //printf("frente\n");
-            pthread_mutex_lock(&cadeado);
-            //printf("frente2\n");
-            
-            if(movimento_realizado==1) {
-                pthread_mutex_unlock(&cadeado);
-                movimento_realizado=0;
-                return;
-            }    
-            //printf("%d\n", estrutura_sensor->id_sensor);
-            int lado = objeto_na_frente(1,estrutura_sensores[3].distancia,estrutura_sensores[2].distancia);
-            //printf("frente3\n");
-            if(lado!=-1){
-                movimentacao = (lado==esquerda)?1:2;
-            }
-            
-            movimento_realizado=1;
+    estrutura_sensores[cont].distancia = media;
+    if(id==0)printf("Distância do sensor %s = %lf,\n\n\n",nome_sensores[id],estrutura_sensores[cont].distancia);
+    //delay(2000);
+    if(media<=10 && (estrutura_sensor->id_sensor==frontal_esquerda || estrutura_sensor->id_sensor==frontal_direita)){
+        //printf("frente\n");
+        pthread_mutex_lock(&cadeado);
+        //printf("frente2\n");
+        
+        if(movimento_realizado==1) {
             pthread_mutex_unlock(&cadeado);
-            
-        
-        } else if(media<=5 && (estrutura_sensor->id_sensor==lateral_esquerdo || estrutura_sensor->id_sensor==lateral_direito)){
-            //printf("lateral\n");
-            //pthread_mutex_lock(&cadeado);
-            int lado = objeto_na_frente(0,estrutura_sensores[3].distancia,estrutura_sensores[2].distancia);
-            if(lado == esquerda){
-                gira_pra_direita();
-                movimentacao = 3;
-            } else if(lado == direita){
-                gira_pra_esquerda();
-                movimentacao = 4;
-            }
-            else{
-                return;
-            }
-            delay(600);
-            para_depois_anda();
-            //pthread_mutex_unlock(&cadeado);
-            
-        
-
-        
+            movimento_realizado=0;
+            return;
+        }    
+        //printf("%d\n", estrutura_sensor->id_sensor);
+        int lado = objeto_na_frente(1,estrutura_sensores[3].distancia,estrutura_sensores[2].distancia);
+        //printf("frente3\n");
+        if(lado!=-1){
+            movimentacao = (lado==esquerda)?1:2;
         }
-           
+        
+        movimento_realizado=1;
+        pthread_mutex_unlock(&cadeado);
+        
+    } else if(media<=5 && (estrutura_sensor->id_sensor==lateral_esquerdo || estrutura_sensor->id_sensor==lateral_direito)){
+        //printf("lateral\n");
+        //pthread_mutex_lock(&cadeado);
+        int lado = objeto_na_frente(0,estrutura_sensores[3].distancia,estrutura_sensores[2].distancia);
+        if(lado == esquerda){
+            gira_pra_direita();
+            movimentacao = 3;
+        } else if(lado == direita){
+            gira_pra_esquerda();
+            movimentacao = 4;
+        }
+        else{
+            return;
+        }
+        delay(600);
+        para_depois_anda();
+        //pthread_mutex_unlock(&cadeado);
     }
 }
 
 
 void * sensor(void * args){
-  
 	struct sensores * estrutura_sensor = (struct sensores *)  args;
     int cont = estrutura_sensor->num;
     int id = estrutura_sensor->id_sensor;
     int trigger1 = trigger[id];
     int echo1 = echo[id];
-    
+    int quantidadeCerto=0,quantidadeErrada = 0;
     pinMode(trigger1, OUTPUT);
     pinMode(echo1, INPUT);
     
@@ -94,12 +84,14 @@ void * sensor(void * args){
     printf (" Aguardando o sensor %s estabilizar\n", nome_sensores[id]);
 
     delay(1000);
-   
+    int k=1;
+    unsigned int tempo=0;
     while(*(estrutura_sensor->continuaThread)){
+        int init = micros();
         double elem[20],media=0.0;
         char leitura_invalida=0;
-        short int quantidade = 10;
-        for(short int i=0,j=0;i<10;i++){
+        short int quantidade = 3;
+        for(short int i=0,j=0;i<3;i++){
             digitalWrite(trigger1,HIGH);
             delayMicroseconds(10);
             digitalWrite(trigger1,LOW);
@@ -116,11 +108,11 @@ void * sensor(void * args){
                
             }
            
-            if(leitura_invalida){
-                quantidade--;
-                leitura_invalida=0;
-                continue;
-            }
+            // if(leitura_invalida){
+            //     quantidade--;
+            //     leitura_invalida=0;
+            //     continue;
+            // }
             
             while(digitalRead(echo1)==1){
                 fim_pulso=micros();
@@ -130,16 +122,13 @@ void * sensor(void * args){
                 } 
             }
             
-            if(leitura_invalida){
-                quantidade--;
-                leitura_invalida=0;
-                continue;
-            }
+            // if(leitura_invalida){
+            //     quantidade--;
+            //     leitura_invalida=0;
+            //     continue;
+            // }
             duracao_pulso = fim_pulso - inicio_pulso;
-           
-            
             double distance = (double)duracao_pulso* 0.017150;
-           
             elem[j]=distance;
             media+= distance;
             j++;
@@ -155,9 +144,22 @@ void * sensor(void * args){
         }
 
         desvio_padrao/=quantidade;
-        distancia_valida(desvio_padrao,cont,media,id,estrutura_sensor);
-        
+        if(desvio_padrao<=1){
+            quantidadeCerto++;
+            distancia_valida(cont,media,id,estrutura_sensor);
+        } else{
+            quantidadeErrada++;
+        }
+       
+        int finish = micros();
+        tempo+= finish-init;
+        //printf("%d duracao total = %d(microsegundos), %d\n",k,finish-init,tempo);
+        k++;
     }
+    k--;
+    double tempo2 = tempo/(k*1.0);
+    printf("Sensor %s:\n    quantidade = %d  tempo medio = %lf\n    Taxa de leituras corretas  = %lf%%\n\n\n",nome_sensores[id],k,tempo2,(quantidadeCerto*100.0)/(quantidadeCerto+quantidadeErrada));
+
     pthread_mutex_unlock(&cadeado);
 
     pthread_exit(0);

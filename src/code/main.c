@@ -45,25 +45,34 @@ int main()
         estrutura_sensores[i].num = i;
     }
 
-    pthread_create(&sensor_frontal[0],NULL,&sensor,&estrutura_sensores[0]);
-    pthread_create(&sensor_frontal[1],NULL,&sensor,&estrutura_sensores[1]);
-    pthread_create(&sensor_lateral[0],NULL,&sensor,&estrutura_sensores[2]);
-    pthread_create(&sensor_lateral[1],NULL,&sensor,&estrutura_sensores[3]);
-    pthread_create(&sensor_traseiro,NULL,&sensor,&estrutura_sensores[4]);
+    cria_thread_com_prioridade(&sensor_frontal[0],99,&sensor,&estrutura_sensores[0]);
+    cria_thread_com_prioridade(&sensor_frontal[1],99,&sensor,&estrutura_sensores[1]);
+    cria_thread_com_prioridade(&sensor_lateral[0],50,&sensor,&estrutura_sensores[2]);
+    cria_thread_com_prioridade(&sensor_lateral[1],50,&sensor,&estrutura_sensores[3]);
+    cria_thread_com_prioridade(&sensor_traseiro,50,&sensor,&estrutura_sensores[4]);
+
+    //pthread_create(&sensor_frontal[0],NULL,&sensor,&estrutura_sensores[0]);
+    // pthread_create(&sensor_frontal[1],NULL,&sensor,&estrutura_sensores[1]);
+    // pthread_create(&sensor_lateral[0],NULL,&sensor,&estrutura_sensores[2]);
+    // pthread_create(&sensor_lateral[1],NULL,&sensor,&estrutura_sensores[3]);
+    // pthread_create(&sensor_traseiro,NULL,&sensor,&estrutura_sensores[4]);
     
    
 
     inicia_motor();
 
     delay(2000);
-    //anda_pra_frente();
     for(int i=5;i>0;i--){
         printf("%ds\n",i);
         delay(1000);
     }
-     pthread_create(&t_obstaculos,NULL,&obstaculos,&estrutura_sensores);
-     pthread_create(&t_mapa,NULL,&desenha_mapa,&keepThreading);
-     anda_pra_frente();
+
+    cria_thread_com_prioridade(&t_obstaculos,40,&obstaculos,&estrutura_sensores);
+    cria_thread_com_prioridade(&t_mapa,40,&desenha_mapa,&keepThreading);
+
+    //  pthread_create(&t_obstaculos,NULL,&obstaculos,&estrutura_sensores);
+    //  pthread_create(&t_mapa,NULL,&desenha_mapa,&keepThreading);
+    anda_pra_frente();
 
     while(1){
         printf("Digite\n1 para sentido horário\n2 para anti-horário\n3 para ponto morto\n4 para freio\n");

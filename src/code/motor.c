@@ -94,6 +94,17 @@ void ponto_morto(){
     digitalWrite(RODA_DIREITA_2, LOW);
 }
 
+void torque_inicial(){
+    digitalWrite(RODA_ESQUERDA_1,LOW);
+    digitalWrite(RODA_ESQUERDA_2,HIGH);
+    digitalWrite(RODA_DIREITA_1, LOW);
+    digitalWrite(RODA_DIREITA_2, HIGH);
+    softPwmWrite(PWM_RODA_DIREITA,80);
+    softPwmWrite(PWM_RODA_ESQUERDA,100);
+}
+
+
+
 void inicia_motor(){
     pinMode(RODA_ESQUERDA_1,OUTPUT);
     pinMode(RODA_ESQUERDA_2,OUTPUT);
@@ -101,4 +112,9 @@ void inicia_motor(){
     pinMode(RODA_DIREITA_2,OUTPUT);
     softPwmCreate(PWM_RODA_ESQUERDA,0,100);
     softPwmCreate(PWM_RODA_DIREITA,0,100);
+
+    torque_inicial();
+    delay(20);
+    ponto_morto();
+
 }

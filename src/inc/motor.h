@@ -25,6 +25,7 @@ void gira_pra_esquerda();
 void gira_pra_direita();
 void ponto_morto();
 void inicia_motor();
+void torque_inicial();
 
 
 #endif
