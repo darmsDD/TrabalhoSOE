@@ -16,7 +16,7 @@ void cria_thread_com_prioridade(pthread_t *t,int prioridade,void *(*funcao)(void
     param.sched_priority=prioridade;
     rc = pthread_attr_setschedparam (&attr, &param);
     pthread_attr_getschedparam (&attr, &param);
-    printf("prio %d\n",param.sched_priority);
+    //printf("prio %d\n",param.sched_priority);
     pthread_create (t, &attr,funcao, args);
    
     return;

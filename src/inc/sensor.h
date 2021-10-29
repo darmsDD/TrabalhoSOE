@@ -10,18 +10,18 @@
 #include <softPwm.h>
 #include "motor.h"
 
-#define frontal_esquerda_trigger 6
-#define frontal_esquerda_echo 10
+#define frontal_esquerda_trigger 4
+#define frontal_esquerda_echo 5
 #define frontal_direita_trigger  21
 #define frontal_direita_echo 22
 
-#define traseiro_trigger 12
-#define traseiro_echo 13
+#define traseiro_trigger 21
+#define traseiro_echo 22
 
 #define lateral_esquerda_trigger 0
 #define lateral_esquerda_echo  2
-#define lateral_direita_trigger 4
-#define lateral_direita_echo 5
+#define lateral_direita_trigger 12
+#define lateral_direita_echo 13
 
 #define frontal_esquerda 0
 #define frontal_direita 1
