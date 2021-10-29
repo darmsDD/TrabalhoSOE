@@ -152,19 +152,19 @@ void altera_posicao(int opcao){
          switch (direcao)
         {
         case 1:
-            printf("giro 1\n");
+            //printf("giro 1\n");
             pos[0]+=dist_giro;
             break;
         case 2:
-            printf("giro 2\n");
+            //printf("giro 2\n");
             pos[1]+=dist_giro;
             break;
         case 3:
-            printf("giro 3\n");
+            //printf("giro 3\n");
             pos[0]-=dist_giro;
             break;
         case 4:
-            printf("giro 4\n");
+            //printf("giro 4\n");
             pos[1]-=dist_giro;
             break;
         default:
