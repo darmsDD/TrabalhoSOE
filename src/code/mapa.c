@@ -141,7 +141,7 @@ void altera_posicao(int opcao){
             pos[0] -=5;
         }
     } else{
-        int dist_giro=10;
+        int dist_giro=15;
          switch (direcao)
         {
         case 1:
