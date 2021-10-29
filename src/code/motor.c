@@ -24,7 +24,7 @@ int objeto_na_frente(int opcao, double sensor_esquerdo,double sensor_direito){
     int lado = gira_carrinho(sensor_esquerdo,sensor_direito);
     //printf("etapa2\n");
     if(opcao==1){
-        delay(1550);
+        delay(2000);
     } else {
         delay(800);
     }
@@ -56,8 +56,8 @@ void anda_pra_frente(){
     digitalWrite(RODA_ESQUERDA_2,HIGH);
     digitalWrite(RODA_DIREITA_1, LOW);
     digitalWrite(RODA_DIREITA_2, HIGH);
-    softPwmWrite(PWM_RODA_DIREITA,80);
-    softPwmWrite(PWM_RODA_ESQUERDA,100);
+    softPwmWrite(PWM_RODA_DIREITA,50);
+    softPwmWrite(PWM_RODA_ESQUERDA,60);
 }
 
 void anda_pra_tras(){
@@ -65,8 +65,8 @@ void anda_pra_tras(){
     digitalWrite(RODA_DIREITA_2, LOW);
     digitalWrite(RODA_ESQUERDA_1, HIGH);
     digitalWrite(RODA_ESQUERDA_2, LOW);
-    softPwmWrite(PWM_RODA_ESQUERDA,100);
-    softPwmWrite(PWM_RODA_DIREITA,80);
+    softPwmWrite(PWM_RODA_ESQUERDA,60);
+    softPwmWrite(PWM_RODA_DIREITA,50);
 }
 
 void gira_pra_direita(){

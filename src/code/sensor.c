@@ -27,6 +27,7 @@ void distancia_valida(int cont,double media,int id,struct sensores * estrutura_s
     int esquerda = 1,direita=0;
     estrutura_sensores[cont].distancia = media;
     //if(id==0)printf("Distância do sensor %s = %lf,\n\n\n",nome_sensores[id],estrutura_sensores[cont].distancia);
+    //if(id==1)printf("Distância do sensor %s = %lf,\n\n\n",nome_sensores[id],estrutura_sensores[cont].distancia);
     //delay(2000);
     if(media<=10 && (estrutura_sensor->id_sensor==frontal_esquerda || estrutura_sensor->id_sensor==frontal_direita)){
         //printf("frente\n");
@@ -101,7 +102,7 @@ void * sensor(void * args){
             
             while (digitalRead(echo1)==0){
                 inicio_pulso = micros();
-                if((inicio_pulso - inicia_programa) > 2910){
+                if((inicio_pulso - inicia_programa) > 50000){
                     leitura_invalida = 1;
                     break;
                 } 
@@ -116,7 +117,7 @@ void * sensor(void * args){
             
             while(digitalRead(echo1)==1){
                 fim_pulso=micros();
-                if((fim_pulso - inicio_pulso) > 2910){
+                if((fim_pulso - inicio_pulso) > 50000){
                     leitura_invalida = 1;
                     break;
                 } 
@@ -132,7 +133,7 @@ void * sensor(void * args){
             elem[j]=distance;
             media+= distance;
             j++;
-            delayMicroseconds(100);
+            delayMicroseconds(200);
         }
         if(quantidade==0)continue;
 

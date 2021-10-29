@@ -113,11 +113,11 @@ void * obstaculos(void * args){
             if(direc==0){direc=4;}
             switch_obstaculos(direc,(int)round(sensorlateral_direita->distancia),1);
         }
-        if(sensor_traseiro->distancia<dist_maxima){
+        /*if(sensor_traseiro->distancia<dist_maxima){
             direc  = (direcao+2)%4;
 
             switch_obstaculos(direc,(int)round(sensor_traseiro->distancia)+comprimento_carrinho,1);
-        }
+        }*/
 
         delayMicroseconds(10000);
     }
@@ -246,7 +246,7 @@ void * desenha_mapa(void * args){
         //     printf("aaaaaaaaaa\n");
         //     movimentacao=1;
         // }
-        delay(25);
+        delay(45);
     }
 
     
