@@ -47,28 +47,27 @@ void preenche_mapa_obstaculo(int l,int c,int vertical,int sensor){
 }
 
 
-
-void switch_obstaculos(int direc,int distancia_obstaculo,int desloc_escrita){
+void switch_obstaculos(int direc,int distancia_obstaculo,int desloc_escrita,int tamanho_carrinho){
     int l,c,vertical;
     switch (direc)
     {
         case 1/*para cima*/:
-            l = pos[0] - distancia_obstaculo;
+            l = pos[0] - distancia_obstaculo - tamanho_carrinho;
             c = pos[1]-desloc_escrita;
             vertical=1;
             break;
         case 2/*para esquerda*/:
-            c = pos[1] - distancia_obstaculo;
+            c = pos[1] - distancia_obstaculo - tamanho_carrinho;
             l = pos[0]-desloc_escrita;
             vertical=0;
             break;
         case 3/*para baixo*/:
-            l = pos[0] + distancia_obstaculo;
+            l = pos[0] + distancia_obstaculo + tamanho_carrinho;
             c = pos[1]-desloc_escrita;
             vertical=1;
             break;
         case 4/*para direita*/:
-            c = pos[1] + distancia_obstaculo;
+            c = pos[1] + distancia_obstaculo + tamanho_carrinho;
             l = pos[0]-desloc_escrita;
             vertical=0;
             break;
@@ -97,21 +96,21 @@ void * obstaculos(void * args){
         
         if(sensor_frontal_esquerda->distancia<dist_maxima){
             //printf("total %d = %d - %d\n", (int)round(sensor_frontal_esquerda->distancia) - pos[0], (int)round(sensor_frontal_esquerda->distancia), pos[0]);
-            switch_obstaculos(direcao,(int)round(sensor_frontal_esquerda->distancia),3);
+            switch_obstaculos(direcao,(int)round(sensor_frontal_esquerda->distancia),3,0);
         } 
         if(sensor_frontal_direita->distancia<dist_maxima){
             //printf("total %d = %d - %d\n", (int)round(sensor_frontal_direita->distancia) - pos[0], (int)round(sensor_frontal_direita->distancia), pos[0]);
-            switch_obstaculos(direcao,(int)round(sensor_frontal_direita->distancia),-1);
+            switch_obstaculos(direcao,(int)round(sensor_frontal_direita->distancia),-1,0);
         } 
 
         if(sensorlateral_esquerda->distancia<dist_maxima){
             direc = direcao%4 +1;
-            switch_obstaculos(direc,(int)round(sensorlateral_esquerda->distancia),1);
+            switch_obstaculos(direc,(int)round(sensorlateral_esquerda->distancia),1,largura_carrinho/2);
         }
         if(sensorlateral_direita->distancia<dist_maxima){
             direc = direcao -1 ;
             if(direc==0){direc=4;}
-            switch_obstaculos(direc,(int)round(sensorlateral_direita->distancia),1);
+            switch_obstaculos(direc,(int)round(sensorlateral_direita->distancia),1,largura_carrinho/2);
         }
         /*if(sensor_traseiro->distancia<dist_maxima){
             direc  = (direcao+2)%4;
