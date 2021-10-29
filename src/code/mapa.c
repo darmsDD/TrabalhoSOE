@@ -8,13 +8,7 @@ int parado=1;
 char objetos[] = {' ','^','<','v','>','1'};
 extern int movimentacao;
 
-void * le_comando(){
-    while(1){
-        printf("digite 3 para baixo 1 para cima,\n4 para a direita e 2 para esquerda\n");
-        scanf("%d",&direcao);
-    }
-    pthread_exit(0);
-}
+
 void imprime_mapa(){
     //keep_threading = 0;
     FILE * arquivo_mapa;
